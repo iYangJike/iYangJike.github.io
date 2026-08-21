@@ -1,0 +1,133 @@
+backend:
+  name: github
+  repo: iYangJike/iYangJike.github.io
+  branch: main
+  base_url: https://decap-cms-backend.vercel.app
+  client_id: Ov23liX8k2rOOZ7wHTnx
+
+media_folder: src/content/posts/images
+public_folder: /images
+
+collections:
+  - name: posts
+    label: 博客文章
+    label_singular: 文章
+    folder: src/content/posts
+    path: '{{slug}}/index'
+    create: true
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    preview_path: posts/{{slug}}
+    editor:
+      preview: false
+    fields:
+      - label: 标题
+        name: title
+        widget: string
+      - label: 发布日期
+        name: published
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - label: 草稿
+        name: draft
+        widget: boolean
+        default: false
+        required: false
+      - label: 摘要
+        name: description
+        widget: text
+        required: false
+      - label: 标签
+        name: tags
+        widget: list
+        required: false
+        field:
+          label: 标签
+          name: tag
+          widget: string
+      - label: 系列
+        name: series
+        widget: string
+        required: false
+      - label: 显示目录
+        name: toc
+        widget: boolean
+        default: true
+        required: false
+      - label: 封面图
+        name: coverImage
+        widget: object
+        required: false
+        fields:
+          - label: 图片
+            name: src
+            widget: image
+            required: false
+          - label: 替代文本
+            name: alt
+            widget: string
+            required: false
+      - label: 正文
+        name: body
+        widget: markdown
+
+  - name: pages
+    label: 页面
+    files:
+      - label: 首页
+        name: home
+        file: src/content/home.md
+        fields:
+          - label: 头像
+            name: avatarImage
+            widget: object
+            fields:
+              - label: 图片
+                name: src
+                widget: image
+                required: false
+              - label: 替代文本
+                name: alt
+                widget: string
+                required: false
+          - label: GitHub 用户名
+            name: githubCalendar
+            widget: string
+            required: false
+          - label: 正文
+            name: body
+            widget: markdown
+
+      - label: 文章附言
+        name: addendum
+        file: src/content/addendum.md
+        fields:
+          - label: 头像
+            name: avatarImage
+            widget: object
+            fields:
+              - label: 图片
+                name: src
+                widget: image
+                required: false
+              - label: 替代文本
+                name: alt
+                widget: string
+                required: false
+          - label: 正文
+            name: body
+            widget: markdown
+
+      - label: 关于页面
+        name: about
+        file: src/pages/about.md
+        fields:
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+
+locale: zh_CN
