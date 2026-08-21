@@ -2,7 +2,7 @@ backend:
   name: github
   repo: iYangJike/iYangJike.github.io
   branch: main
-  base_url: https://decap-cms-backend.vercel.app
+  base_url: https://decap-cms-oauth.dorukgezici.vercel.app
   client_id: Ov23liX8k2rOOZ7wHTnx
 
 media_folder: src/content/posts/images
