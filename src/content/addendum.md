@@ -1,6 +1,6 @@
 ---
 avatarImage:
-  src: './avatar.jpg'
+  src: './profile.webp'
   alt: 'My avatar'
 ---
 
