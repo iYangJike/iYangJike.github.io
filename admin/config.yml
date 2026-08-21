@@ -2,7 +2,7 @@ backend:
   name: github
   repo: iYangJike/iYangJike.github.io
   branch: main
-  auth_type: pkce
+  base_url: https://decap-oauth-vercel-seven.vercel.app
   client_id: Ov23liX8k2rOOZ7wHTnx
 
 media_folder: src/content/posts/images
