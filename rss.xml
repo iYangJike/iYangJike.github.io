@@ -261,9 +261,9 @@ collections:
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;填写信息：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;         - Application name：`My Blog CMS`（任意名称）
-         - Homepage URL：`https://iyangjike.github.io`
-         - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+&lt;pre&gt;&lt;code&gt;                         - Application name：`My Blog CMS`（任意名称）
+                         - Homepage URL：`https://iyangjike.github.io`
+                         - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
