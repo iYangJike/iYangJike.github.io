@@ -9,6 +9,23 @@ media_folder: src/content/posts/images
 public_folder: /images
 
 collections:
+  # 标签管理（统一管理，写文章时下拉选择）
+  - name: tags
+    label: 标签
+    label_singular: 标签
+    folder: src/content/tags
+    create: true
+    slug: '{{slug}}'
+    identifier_field: title
+    editor:
+      preview: false
+    fields:
+      - label: 标签名
+        name: title
+        widget: string
+        hint: 标签显示名称，如 "Astro"、"Web3"
+
+  # 博客文章
   - name: posts
     label: 博客文章
     label_singular: 文章
@@ -40,12 +57,13 @@ collections:
         required: false
       - label: 标签
         name: tags
-        widget: list
+        widget: relation
+        collection: tags
+        value_field: title
+        search_fields: [title]
+        display_fields: [title]
+        multiple: true
         required: false
-        field:
-          label: 标签
-          name: tag
-          widget: string
       - label: 系列
         name: series
         widget: string
