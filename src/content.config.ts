@@ -18,6 +18,7 @@ const postsCollection = defineCollection({
           src: image(),
           alt: z.string(),
         })
+        .nullable()
         .optional(),
       toc: z.boolean().optional().default(true),
     }),
