@@ -25,6 +25,29 @@ collections:
         widget: string
         hint: 标签显示名称，如 "Astro"、"Web3"
 
+  # 系列管理（统一管理，写文章时下拉选择）
+  - name: series
+    label: 系列
+    label_singular: 系列
+    folder: src/content/series
+    create: true
+    slug: '{{slug}}'
+    identifier_field: title
+    editor:
+      preview: false
+    fields:
+      - label: 系列名
+        name: title
+        widget: string
+      - label: 描述
+        name: description
+        widget: text
+        required: false
+      - label: 封面图
+        name: image
+        widget: image
+        required: false
+
   # 博客文章
   - name: posts
     label: 博客文章
@@ -66,7 +89,11 @@ collections:
         required: false
       - label: 系列
         name: series
-        widget: string
+        widget: relation
+        collection: series
+        value_field: title
+        search_fields: [title]
+        display_fields: [title]
         required: false
       - label: 显示目录
         name: toc
