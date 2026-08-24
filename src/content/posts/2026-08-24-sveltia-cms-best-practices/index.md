@@ -1,22 +1,24 @@
 ---
-title: 'Sveltia CMS 最佳实践：从入门到精通的完整指南'
+title: Sveltia CMS 最佳实践：从入门到精通的完整指南
 published: 2026-08-24
 draft: false
-description: '基于官方文档和社区实践，全面总结 Sveltia CMS 的配置技巧、内容建模、性能优化、安全部署和日常使用的最佳实践。'
+description: 基于官方文档和社区实践，全面总结 Sveltia CMS 的配置技巧、内容建模、性能优化、安全部署和日常使用的最佳实践。
 tags:
   - Sveltia CMS
   - Decap CMS
   - Astro
   - 博客
   - CMS
+series: 博客搭建
 toc: true
+coverImage: null
 ---
 
 # Sveltia CMS 最佳实践：从入门到精通的完整指南
 
 本文基于 Sveltia CMS 官方文档、Showcase 中 472 个真实站点案例、以及个人实战经验，全面总结 Git-based CMS 的配置技巧和开发最佳实践。
 
----
+***
 
 ## 一、为什么选择 Sveltia CMS
 
@@ -25,7 +27,7 @@ Sveltia CMS 是 Netlify CMS / Decap CMS 的现代替代品，由前 Mozilla 本�
 ### 核心优势
 
 | 特性 | 说明 |
-|------|------|
+| --- | --- |
 | **轻量** | 整包不到 500 KB（Decap 是 1.5 MB） |
 | **快速** | Svelte 编译时优化 + GraphQL API 批量加载 |
 | **安全** | 无已知 XSS 漏洞，不需要 `unsafe-eval` |
@@ -41,7 +43,7 @@ Sveltia CMS 是 Netlify CMS / Decap CMS 的现代替代品，由前 Mozilla 本�
 - 支持键盘快捷键（Ctrl+E 新建、Ctrl+S 保存、Ctrl+F 搜索）
 - Relation 字段有 Backlinks 侧边栏（查看哪些文章引用了当前条目）
 
----
+***
 
 ## 二、内容建模最佳实践
 
@@ -66,7 +68,7 @@ tags:
 
 ### 2.2 推荐的个人博客内容模型
 
-```
+```plain
 src/content/
 ├── posts/          # 博客文章（entry collection）
 │   ├── 2026-01-01-hello-world/
@@ -295,7 +297,7 @@ collections:
 locale: zh_CN
 ```
 
----
+***
 
 ## 三、排序、分组、过滤
 
@@ -342,7 +344,7 @@ view_filters:
 
 列表页顶部会出现快捷过滤按钮，一键筛选。
 
----
+***
 
 ## 四、部署策略
 
@@ -354,7 +356,7 @@ backend:
 ```
 
 | 配置 | 保存按钮行为 |
-|------|------------|
+| --- | --- |
 | 不设 `skip_ci` | 每次保存都触发部署 |
 | `skip_ci: true` | 「保存」不触发，「保存并发布」才触发 |
 | `skip_ci: false` | 反转，「保存」触发，「保存不发布」不触发 |
@@ -407,7 +409,7 @@ Sveltia 支持 emoji 作为集合图标：
   icon: 📚
 ```
 
----
+***
 
 ## 五、安全最佳实践
 
@@ -438,7 +440,7 @@ Sveltia 支持 emoji 作为集合图标：
 
 Sveltia CMS 不需要 `unsafe-eval` 和 `unsafe-inline`：
 
-```
+```plain
 style-src 'self' 'unsafe-inline';
 font-src 'self' https://cdn.jsdelivr.net;
 img-src 'self' blob: data:;
@@ -451,12 +453,12 @@ connect-src 'self' blob: data: https://unpkg.com;
 ### 5.4 认证方式
 
 | 方式 | 安全性 | 适用场景 |
-|------|--------|---------|
+| --- | --- | --- |
 | PKCE（OAuth） | ⭐⭐⭐ 高 | 多人团队 |
 | PAT（Personal Access Token） | ⭐⭐ 中 | 个人开发者 |
 | 外部 OAuth 网关 | ⭐⭐⭐ 高 | GitHub Pages 等静态托管 |
 
----
+***
 
 ## 六、Relation 字段高级用法
 
@@ -501,7 +503,7 @@ dropdown_threshold: 8    # 超过 8 个条目时从复选框切换为搜索下�
   max: 10           # 最多选几个
 ```
 
----
+***
 
 ## 七、本地开发工作流
 
@@ -524,7 +526,7 @@ git commit -m "更新文章"
 
 **限制：** 需要 Chrome/Edge/Brave（Firefox/Safari 不支持 File System Access API）。且 CMS 不会自动 commit，需要手动用 Git 客户端操作。
 
----
+***
 
 ## 八、OAuth 网关搭建
 
@@ -534,7 +536,7 @@ git commit -m "更新文章"
 
 项目结构：
 
-```
+```plain
 decap-oauth-vercel/
 ├── package.json
 ├── vercel.json           # 路由重写
@@ -583,7 +585,7 @@ setTimeout(function() {
 
 > ⚠️ **关键坑：** 如果跳过第一步直接发 token，CMS 不会处理这条消息，表现为登录后卡住不跳转。
 
----
+***
 
 ## 九、常见问题与解决方案
 
@@ -618,12 +620,12 @@ done
 
 **解决：** 删除 frontmatter 中的 `coverImage: null` 行。
 
----
+***
 
 ## 十、Sveltia CMS 的已知限制
 
 | 限制 | 状态 |
-|------|------|
+| --- | --- |
 | 编辑时不能新建关联条目 | issue #493，计划修复 |
 | 不支持嵌套集合 | 计划 1.0 前实现 |
 | 不支持级联删除 | 删除标签不会自动清理文章引用 |
@@ -632,7 +634,7 @@ done
 | 本地开发需要 Chromium 浏览器 | Firefox/Safari 不支持 File System Access API |
 | 单开发者维护 | 更新节奏可能不如团队项目快 |
 
----
+***
 
 ## 十一、社区资源
 
@@ -646,7 +648,7 @@ done
 ### Astro + Sveltia 社区 Starter
 
 | 项目 | 作者 |
-|------|------|
+| --- | --- |
 | [Astros](https://github.com/majesticooss/astros) | zanhk |
 | [Astro i18n Starter](https://github.com/yacosta738/astro-cms) | yacosta738 |
 | [astro-sveltia-cms](https://github.com/knolljo/astro-sveltia-cms) | knolljo |
@@ -657,7 +659,7 @@ done
 - [Content Modeling Guide](https://sveltiacms.app/en/docs/content-modeling) — 官方内容建模指南
 - [Local Development Workflow](https://sveltiacms.app/en/docs/workflows/local) — 本地开发无需代理服务器
 
----
+***
 
 ## 十二、总结
 
@@ -672,6 +674,6 @@ Sveltia CMS 的核心设计哲学可以概括为：
 
 从 Decap CMS 迁移到 Sveltia 只需要改一行 HTML，但体验提升是全面的——更快、更安全、更好用。如果你的博客还在用 Decap CMS，现在就是迁移的最佳时机。
 
----
+***
 
-*参考：Sveltia CMS 官方文档、Showcase 案例、个人实战经验。最后更新：2026-08-24*
+_参考：Sveltia CMS 官方文档、Showcase 案例、个人实战经验。最后更新：2026-08-24_
