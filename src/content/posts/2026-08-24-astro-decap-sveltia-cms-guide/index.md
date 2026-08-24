@@ -1,22 +1,31 @@
 ---
-title: 'Astro + Decap CMS 博客搭建完全指南（含踩坑全记录）'
+title: Astro + Decap CMS 博客搭建完全指南（含踩坑全记录）
 published: 2026-08-24
 draft: false
-description: '从零搭建 Astro 博客、集成 CMS 内容管理、Vercel 部署 OAuth 网关的完整指南，含 7 个踩坑记录和 Decap vs Sveltia 对比。'
-tags: ['Astro', 'Decap CMS', 'Sveltia CMS', 'GitHub', 'Vercel', 'OAuth', '博客']
+description: 从零搭建 Astro 博客、集成 CMS 内容管理、Vercel 部署 OAuth 网关的完整指南，含 7 个踩坑记录和 Decap vs Sveltia 对比。
+tags:
+  - Astro
+  - Decap CMS
+  - Sveltia CMS
+  - GitHub
+  - Vercel
+  - OAuth
+  - 博客
+series: ''
 toc: true
+coverImage: null
 ---
 
 # Astro + Decap CMS 博客搭建完全指南（含 GitHub OAuth 踩坑全记录）
 
 本文记录从零搭建一个 Astro 博客、集成 Decap CMS 内容管理、并通过 Vercel 部署 GitHub OAuth 网关的完整过程。每一步都经过实战验证，包含所有踩过的坑和最终解决方案。
 
----
+***
 
 ## 一、项目概览
 
 | 项目 | 说明 |
-|-|-|
+| --- | --- |
 | 博客框架 | Astro 5 + MultiTerm 主题（Dracula 配色） |
 | 部署平台 | GitHub Pages（iyangjike.github.io） |
 | CI/CD | GitHub Actions 自动构建部署 |
@@ -24,9 +33,13 @@ toc: true
 | OAuth 网关 | Vercel Serverless Functions |
 | 代码仓库 | github.com/iYangJike/iYangJike.github.io |
 
----
+***
 
 ## 二、Astro 博客搭建
+
+## 推荐模版
+
+## [multiterm 开源博客网站](https://multiterm.stelclementine.com/)
 
 ### 2.1 初始化项目
 
@@ -97,7 +110,7 @@ npm run build    # 生产构建
 npm run preview  # 预览构建结果
 ```
 
----
+***
 
 ## 三、集成 CMS 内容管理（Decap → Sveltia）
 
@@ -186,7 +199,7 @@ collections:
 **配置说明：**
 
 | 字段 | 说明 |
-|-|-|
+| --- | --- |
 | `backend.name` | 后端类型，`github` 表示使用 GitHub 仓库存储内容 |
 | `backend.repo` | GitHub 仓库路径（用户名/仓库名） |
 | `backend.branch` | 内容操作的目标分支 |
@@ -195,7 +208,7 @@ collections:
 | `media_folder` | 媒体文件存储路径 |
 | `collections` | 内容集合定义 |
 
----
+***
 
 ## 四、GitHub OAuth 认证（核心难点）
 
@@ -206,7 +219,7 @@ Decap CMS 需要 GitHub 的写入权限（创建分支、提交 PR），这需�
 Decap CMS 支持三种认证方式：
 
 | 方式 | 适用场景 | 缺点 |
-|-|-|-|
+| --- | --- | --- |
 | **PKCE** | 单页应用 | GitHub Pages 不支持，需要服务端 secret |
 | **Netlify Identity** | Netlify 部署 | 只适用于 Netlify |
 | **外部 OAuth 网关** | 任何托管平台 | 需要自己部署一个 OAuth 代理服务 |
@@ -217,7 +230,7 @@ Decap CMS 支持三种认证方式：
 
 整个认证流程如下：
 
-```
+```plain
 用户点击 "Login with GitHub"
   → 弹窗打开 {base_url}/auth
   → OAuth 网关重定向到 GitHub 授权页
@@ -234,12 +247,13 @@ Decap CMS 支持三种认证方式：
 2. 点击 "New OAuth App"
 3. 填写信息：
 
-   - Application name：`My Blog CMS`（任意名称）
-   - Homepage URL：`https://iyangjike.github.io`
-   - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+    - Application name：`My Blog CMS`（任意名称）
+    - Homepage URL：`https://iyangjike.github.io`
+    - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+
 4. 注册后生成 Client Secret（只显示一次，务必保存）
 
----
+***
 
 ## 五、用 Vercel 部署 OAuth 网关
 
@@ -252,7 +266,7 @@ Decap CMS 支持三种认证方式：
 
 ### 5.2 项目结构
 
-```
+```plain
 decap-oauth-vercel/
 ├── package.json          # 项目配置
 ├── vercel.json           # Vercel 路由配置
@@ -401,7 +415,7 @@ npx vercel --prod
 
 部署成功后，你会得到一个类似 `https://decap-oauth-vercel-seven.vercel.app` 的地址。
 
----
+***
 
 ## 六、踩坑全记录
 
@@ -496,7 +510,7 @@ const redirect = `https://github.com/login/oauth/authorize`
 
 **解决：** 去 [https://github.com/settings/developers](https://github.com/settings/developers) → 找到你的 OAuth App → 将 Authorization callback URL 设置为：
 
-```
+```plain
 https://decap-oauth-vercel-seven.vercel.app/callback
 ```
 
@@ -532,7 +546,7 @@ if (fs.existsSync(avatarPath)) {
 }
 ```
 
----
+***
 
 ## 八、Decap CMS vs Sveltia CMS 对比
 
@@ -541,7 +555,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.1 出身与背景
 
 |  | Decap CMS | Sveltia CMS |
-|-|-|-|
+| --- | --- | --- |
 | 前身 | Netlify CMS（2022 年被 Netlify 放弃） | 无，完全从零重写 |
 | 创立时间 | 2023 年 2 月，由 Netlify 合作伙伴接手 | 2022 年 11 月启动，2023 年 3 月 GitHub 公开 |
 | 性质 | Netlify CMS 的"换标版"，继承全部代码 | **完全重写**，不是 fork |
@@ -551,7 +565,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.2 性能对比
 
 |  | Decap CMS | Sveltia CMS |
-|-|-|-|
+| --- | --- | --- |
 | 打包体积 | \~1.5 MB（gzip） | \~300 KB（gzip）——只有 Decap 的 1/5 |
 | 框架开销 | React + 虚拟 DOM | Svelte 编译时优化，无虚拟 DOM |
 | API 方式 | REST，逐条请求 | GraphQL，批量获取 |
@@ -564,7 +578,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.3 安全对比
 
 |  | Decap CMS | Sveltia CMS |
-|-|-|-|
+| --- | --- | --- |
 | XSS 漏洞 | ⚠️ 有已知未修复漏洞 | ✅ 不受影响，实现完全不同 |
 | 代理服务器漏洞 | ⚠️ 两个未修复漏洞 | ✅ 本地开发模式不需要代理 |
 | 依赖更新 | ⚠️ 多个高危依赖长期未更新 | ✅ Dependabot + pnpm audit 持续更新 |
@@ -575,7 +589,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.4 功能对比
 
 | 功能 | Decap CMS | Sveltia CMS |
-|-|-|-|
+| --- | --- | --- |
 | config.yml 兼容 | — | ✅ 完全兼容，不用改 |
 | 多语言 i18n | ⚠️ 有 bug，功能受限 | ✅ 一等公民，从底层就支持 |
 | 本地开发 | 需要代理服务器 | ✅ 直连本地 Git 仓库 |
@@ -594,7 +608,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.5 维护与社区
 
 |  | Decap CMS | Sveltia CMS |
-|-|-|-|
+| --- | --- | --- |
 | 发布频率 | 偶尔，间隔数月 | 频繁，持续更新 |
 | Bug 修复 | ⚠️ 大量 issue 被 stale bot 自动关闭 | ✅ 通常在 24 小时内响应 |
 | 公开路线图 | 无 | ✅ 有详细的 roadmap |
@@ -605,7 +619,7 @@ if (fs.existsSync(avatarPath)) {
 ### 8.6 总结建议
 
 | 如果你... | 推荐 |
-|-|-|
+| --- | --- |
 | 已经在用 Decap CMS，想更好的体验 | → Sveltia CMS，一行代码迁移 |
 | 新项目选型 | → Sveltia CMS，没有理由选 Decap |
 | 需要多语言站点 | → Sveltia CMS，i18n 是一等公民 |
@@ -613,7 +627,7 @@ if (fs.existsSync(avatarPath)) {
 | 需要移动端管理 | → Sveltia CMS，专门做了移动端适配 |
 | 有大量文章 | → Sveltia CMS，GraphQL 批量加载快得多 |
 
----
+***
 
 ## 九、从 Decap CMS 迁移到 Sveltia CMS
 
@@ -662,7 +676,7 @@ done
 - ✅ 移动端也可以正常使用管理后台
 - ✅ 不再有安全漏洞的隐忧
 
----
+***
 
 ## 十、最终配置汇总
 
@@ -680,18 +694,18 @@ backend:
 ### Vercel 环境变量
 
 | 变量 | 值 |
-|-|-|
+| --- | --- |
 | `OAUTH_CLIENT_ID` | `Ov23liX8k2rOOZ7wHTnx` |
 | `OAUTH_CLIENT_SECRET` | GitHub OAuth App 的 Client Secret |
 
 ### GitHub OAuth App 配置
 
 | 字段 | 值 |
-|-|-|
+| --- | --- |
 | Homepage URL | `https://iyangjike.github.io` |
 | Authorization callback URL | `https://decap-oauth-vercel-seven.vercel.app/callback` |
 
----
+***
 
 ## 十一、日常使用
 
@@ -715,13 +729,13 @@ backend:
 
 在编辑器中可以直接拖拽图片到正文，Decap CMS 会自动上传到 `src/content/posts/images/` 目录。
 
----
+***
 
 ## 十二、总结
 
 整个搭建过程涉及的技术栈：
 
-```
+```plain
 Astro (博客框架)
   + MultiTerm 主题 (终端风格)
   + Decap CMS (内容管理)
@@ -733,6 +747,6 @@ Astro (博客框架)
 
 最核心的难点是 OAuth 认证——从 PKCE 到自建网关，经历了路由不匹配、缺少握手协议、redirect_uri 缺失等多个坑。但只要理解了 Decap CMS 的 OAuth 握手流程（`authorizing:github` → 等待回复 → `authorization:github:success:{...}`），一切都迎刃而解。
 
----
+***
 
-*最后更新：2026-08-21*
+_最后更新：2026-08-21_
