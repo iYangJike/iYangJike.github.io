@@ -10,7 +10,7 @@ backend:
 logo:
   src: /iike-profile-4.webp
   show_in_header: false
-app_title: iYangJike blog admin
+app_title: iYangJike admin
 site_url: https://iyangjike.github.io
 
 media_folder: src/content/posts/images
