@@ -39,6 +39,10 @@
 &lt;/table&gt;
 &lt;hr /&gt;
 &lt;h2&gt;二、Astro 博客搭建&lt;/h2&gt;
+&lt;h3&gt;推荐模版&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://multiterm.stelclementine.com/&quot;&gt;multiterm 开源博客网站&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h3&gt;2.1 初始化项目&lt;/h3&gt;
 &lt;p&gt;MultiTerm 是一个终端风格的技术博客主题，基于 Astro 构建，支持暗色/亮色切换、代码高亮、数学公式、GitHub 卡片等丰富功能。&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# 克隆主题仓库（具体仓库地址取决于你使用的主题）
@@ -258,11 +262,10 @@ collections:
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;填写信息：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Application name：&lt;code&gt;My Blog CMS&lt;/code&gt;（任意名称）&lt;/li&gt;
-&lt;li&gt;Homepage URL：&lt;code&gt;https://iyangjike.github.io&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Authorization callback URL：&lt;code&gt;https://decap-oauth-vercel-seven.vercel.app/callback&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt; - Application name：`My Blog CMS`（任意名称）
+ - Homepage URL：`https://iyangjike.github.io`
+ - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+&lt;/code&gt;&lt;/pre&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;注册后生成 Client Secret（只显示一次，务必保存）&lt;/p&gt;
