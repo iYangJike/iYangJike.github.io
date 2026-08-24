@@ -7,6 +7,7 @@ tags:
   - Blog
 series: ''
 toc: true
+coverImage: null
 ---
 
 这是搭建新博客后的第一篇文章。。
