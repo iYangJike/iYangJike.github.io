@@ -8,7 +8,7 @@ backend:
 
 # 自定义品牌
 logo:
-  src: /iike-profile-4.webp
+  src: /lorelei-1787563534019.svg
   show_in_header: false
 app_title: iYangJike admin
 site_url: https://iyangjike.github.io
