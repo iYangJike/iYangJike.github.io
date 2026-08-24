@@ -27,6 +27,7 @@
     "@types/react": "^19.1.12",
     "@types/react-dom": "^19.1.9",
     "astro": "^5.13.5",
+    "astro-decap-cms-oauth": "^0.5.2",
     "astro-expressive-code": "^0.41.3",
     "color": "^5.0.0",
     "date-fns": "^4.1.0",
