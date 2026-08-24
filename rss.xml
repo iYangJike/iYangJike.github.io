@@ -1,1000 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>iYangJike</title><description>Web3 开发笔记 — Solidity, React, 智能合约</description><link>https://iyangjike.github.io</link><item><title>DiceBear 完全指南：开源 SVG 头像库的 8 种玩法</title><link>https://iyangjike.github.io/posts/2026-08-24-dicebear-avatar-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-dicebear-avatar-guide</guid><description>9.3k Star 的开源头像库 DiceBear 完全介绍：从 HTTP API 到 6 种语言 SDK、55 种风格、Figma 插件、Docker 私有部署、CSS 动画头像等 8 种进阶玩法。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;DiceBear 完全指南：开源 SVG 头像库的 8 种玩法&lt;/h1&gt;
-&lt;h2&gt;一、DiceBear 是什么&lt;/h2&gt;
-&lt;p&gt;DiceBear 是一个&lt;strong&gt;开源头像生成库&lt;/strong&gt;，GitHub 9.3k Stars，核心原理很简单：输入一个字符串（用户名、邮箱、ID 等），输出一个固定的 SVG 头像。同一个 seed 永远生成同一张图。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&quot;iYangJike&quot; → 🧑‍💻  ← 每次都是这个，一模一样
-&quot;John&quot;      → 👨‍🔬  ← 完全不同
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这意味着你不需要让用户上传头像，不需要存图片文件，不需要处理裁剪缩放。只需要存一个字符串，需要展示的时候实时生成。&lt;/p&gt;
-&lt;h3&gt;核心数据&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;指标&lt;/th&gt;
-&lt;th&gt;数据&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;GitHub Stars&lt;/td&gt;
-&lt;td&gt;9.3k&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;License&lt;/td&gt;
-&lt;td&gt;MIT（代码），风格各自授权&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;头像风格数&lt;/td&gt;
-&lt;td&gt;55 种&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;支持语言&lt;/td&gt;
-&lt;td&gt;JavaScript、Python、PHP、Rust、Go、Dart（6 种）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;输出格式&lt;/td&gt;
-&lt;td&gt;SVG、PNG、WebP、JPEG&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;维护状态&lt;/td&gt;
-&lt;td&gt;活跃开发中，v10 为当前大版本&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr /&gt;
-&lt;h2&gt;二、六种接入方式&lt;/h2&gt;
-&lt;h3&gt;方式一：HTTP API（最方便，零代码）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike
-&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;参数&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;th&gt;示例&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;seed&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;种子字符串&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;?seed=alice&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;size&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;输出尺寸&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;?size=512&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;format&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;输出格式&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;svg&lt;/code&gt; / &lt;code&gt;png&lt;/code&gt; / &lt;code&gt;webp&lt;/code&gt; / &lt;code&gt;jpg&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;backgroundColor&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;背景色&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;?backgroundColor=ff0000&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;风格参数&lt;/td&gt;
-&lt;td&gt;不同风格不同&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;?mouth=happy01&amp;amp;eyes=variant20&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;免费、无限调用、不需要注册。想私有部署也可以，一个 Docker 容器搞定。&lt;/p&gt;
-&lt;h3&gt;方式二：JavaScript/TypeScript（前端/Node.js）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;import { Avatar } from &apos;@dicebear/core&apos;;
-import definition from &apos;@dicebear/styles/lorelei/json&apos; with { type: &apos;json&apos; };
-
-const avatar = new Avatar(definition, {
-  seed: &apos;iYangJike&apos;,
-  size: 512,
-  backgroundColor: [&apos;#1a1a2e&apos;],
-  mouth: [&apos;happy01&apos;],
-});
-
-avatar.toString();   // SVG 字符串 → 直接嵌入 HTML
-avatar.toDataUri();  // data:image/svg+xml;... → img src
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;方式三：Python&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;from dicebear_core import Avatar
-import json
-
-with open(&apos;lorelei.json&apos;) as f:
-    definition = json.load(f)
-
-avatar = Avatar(definition, seed=&apos;iYangJike&apos;, size=512)
-svg_string = str(avatar)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;方式四：CLI（命令行批量生成）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;# 一次生成 100 个头像
-npx dicebear lorelei --count 100 --format png --size 256
-
-# 从文件读取 seed 列表批量生成
-npx dicebear lorelei --seeds seeds.txt --output ./avatars/
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;方式五：在线编辑器&lt;/h3&gt;
-&lt;p&gt;https://editor.dicebear.com — 可视化调整每个五官、颜色、配饰，所见即所得。调整完后可以导出 SVG 或 JSON 参数文件。&lt;/p&gt;
-&lt;h3&gt;方式六：Figma 插件&lt;/h3&gt;
-&lt;p&gt;在 Figma 里直接插入 DiceBear 头像，设计师的福音。还可以用 Figma 创建自己的头像风格，导出为 JSON 定义供 DiceBear 使用。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;三、55 种风格速览&lt;/h2&gt;
-&lt;h3&gt;极简抽象类（适合技术产品/仪表盘）&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;风格&lt;/th&gt;
-&lt;th&gt;视觉效果&lt;/th&gt;
-&lt;th&gt;动画&lt;/th&gt;
-&lt;th&gt;许可&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Shapes&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;几何色块拼接，现代感&lt;/td&gt;
-&lt;td&gt;✅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Identicon&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;GitHub 默认头像风格&lt;/td&gt;
-&lt;td&gt;❌&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Rings&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;同心圆环，简洁&lt;/td&gt;
-&lt;td&gt;❌&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Glass&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;毛玻璃质感&lt;/td&gt;
-&lt;td&gt;✅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Blobs&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;流动斑点&lt;/td&gt;
-&lt;td&gt;✅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Disco&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;迪斯科舞会风&lt;/td&gt;
-&lt;td&gt;❌&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Triangles&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;三角形拼接&lt;/td&gt;
-&lt;td&gt;❌&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Waves&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;波浪纹理&lt;/td&gt;
-&lt;td&gt;✅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Loops&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;循环图案&lt;/td&gt;
-&lt;td&gt;✅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3&gt;人物角色类（适合社交/社区）&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;风格&lt;/th&gt;
-&lt;th&gt;视觉效果&lt;/th&gt;
-&lt;th&gt;许可&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Lorelei&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;黑白线稿，极简优雅&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Bottts&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;机器人，科技感&lt;/td&gt;
-&lt;td&gt;免费商用&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Notionists&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;Notion 手绘风&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Avataaars&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;经典卡通，五官丰富&lt;/td&gt;
-&lt;td&gt;免费商用&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Pixel Art&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;像素风，复古游戏感&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Open Peeps&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;涂鸦手绘，温暖&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Thumbs&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;大拇指卡通风&lt;/td&gt;
-&lt;td&gt;CC0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Adventurer&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;D&amp;amp;D 冒险者，配饰丰富&lt;/td&gt;
-&lt;td&gt;CC BY 4.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Fun Emoji&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;表情包风格&lt;/td&gt;
-&lt;td&gt;CC BY 4.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Croodles&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;蜡笔涂鸦风&lt;/td&gt;
-&lt;td&gt;CC BY 4.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Micah&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;极简插画风&lt;/td&gt;
-&lt;td&gt;CC BY 4.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Big Smile&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;夸张笑容&lt;/td&gt;
-&lt;td&gt;CC BY 4.0&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3&gt;场景类&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;风格&lt;/th&gt;
-&lt;th&gt;视觉效果&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Constellation&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;星座连线&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Landscape&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;自然风景&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Planets&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;星球表面&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr /&gt;
-&lt;h2&gt;四、8 种进阶玩法&lt;/h2&gt;
-&lt;h3&gt;玩法 1：Gravatar 替代品&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;img src=&quot;https://api.dicebear.com/10.x/bottts/svg?seed={{username}}&quot; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;用户注册后自动有头像，不需要上传。同一个用户永远同一个头像。&lt;/p&gt;
-&lt;h3&gt;玩法 2：同一人不同表情&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=happy01   😊
-https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=surprise  😮
-https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=sad       😢
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;同一个 seed，换参数就换表情。可以做评论区的情绪头像、聊天软件的状态头像。&lt;/p&gt;
-&lt;h3&gt;玩法 3：团队/组织头像墙&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;npx dicebear bottts --seeds team.txt --format png --size 256
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;生成整整齐齐的团队头像，风格统一。适合 About 页面展示团队。&lt;/p&gt;
-&lt;h3&gt;玩法 4：动态头像（CSS 动画）&lt;/h3&gt;
-&lt;p&gt;部分风格（Shapes、Glass、Blobs、Moods、Critters、Clay 等）生成的 SVG 自带 CSS 动画。直接嵌入网页，头像会动。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!-- 这个头像会自己动 --&amp;gt;
-&amp;lt;img src=&quot;https://api.dicebear.com/10.x/shapes/svg?seed=alice&quot; /&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;玩法 5：深色/浅色模式自适应&lt;/h3&gt;
-&lt;p&gt;用 DiceBear 的 &lt;code&gt;backgroundColor&lt;/code&gt; 参数生成两个版本，配合 CSS 媒体查询：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;@media (prefers-color-scheme: dark) {
-  .avatar { content: url(&apos;/avatar-dark.svg&apos;); }
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;玩法 6：Figma 自定义风格&lt;/h3&gt;
-&lt;p&gt;DiceBear 提供 Figma 插件，可以在 Figma 里设计自己的头像组件（眼睛、嘴巴、发型等），导出为 JSON 定义，然后就能用 DiceBear 的 API 生成该风格的无限变体。不需要写一行代码。&lt;/p&gt;
-&lt;h3&gt;玩法 7：Docker 私有部署&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;docker run -p 3000:3000 dicebear/api
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;数据不出服务器，完全自己掌控。适合企业内部使用或有隐私要求的场景。&lt;/p&gt;
-&lt;h3&gt;玩法 8：保存参数保证头像唯一性&lt;/h3&gt;
-&lt;p&gt;在在线编辑器中调整五官后，记录下参数组合：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-  &quot;style&quot;: &quot;lorelei&quot;,
-  &quot;eyes&quot;: &quot;variant20&quot;,
-  &quot;eyebrows&quot;: &quot;variant05&quot;,
-  &quot;mouth&quot;: &quot;happy01&quot;,
-  &quot;nose&quot;: &quot;variant05&quot;,
-  &quot;earrings&quot;: &quot;variant03&quot;,
-  &quot;hair&quot;: &quot;variant02&quot;,
-  &quot;head&quot;: &quot;variant03&quot;
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;以后每次用这个参数组合就能生成一模一样的头像，不需要依赖 seed 字符串。这是保持头像唯一性的最可靠方式。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;五、博客实战：用 DiceBear 做 favicon 和头像&lt;/h2&gt;
-&lt;p&gt;我的博客 (iyangjike.github.io) 使用的就是 DiceBear 的 Lorelei 风格：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;Favicon&lt;/strong&gt; — 直接用 SVG 格式，矢量永不模糊。所有现代浏览器都支持 SVG favicon&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;博客头像&lt;/strong&gt; — 用 sharp (Node.js) 将 SVG 渲染为 512×512 的 WebP，保证在 Retina 屏幕上清晰&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Apple Touch Icon&lt;/strong&gt; — 180×180 WebP，iOS 添加到主屏幕时显示&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;工作流：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;DiceBear 编辑器调整参数
-  → 下载 SVG（矢量，无限清晰）
-  → sharp 渲染 → 512×512 WebP（博客头像）
-  → sharp 渲染 → 180×180 WebP（apple-touch-icon）
-  → SVG 直接用作 favicon（无需转换）
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;h2&gt;六、相关资源&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;官网 &amp;amp; Playground：https://www.dicebear.com&lt;/li&gt;
-&lt;li&gt;GitHub：https://github.com/dicebear/dicebear&lt;/li&gt;
-&lt;li&gt;在线编辑器：https://editor.dicebear.com&lt;/li&gt;
-&lt;li&gt;HTTP API 文档：https://www.dicebear.com/how-to-use/http-api/&lt;/li&gt;
-&lt;li&gt;风格浏览：https://www.dicebear.com/styles&lt;/li&gt;
-&lt;li&gt;创建自定义风格：https://www.dicebear.com/guides/create-an-avatar-style-with-figma/&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;em&gt;参考：DiceBear 官方文档、GitHub README、个人使用经验。最后更新：2026-08-24&lt;/em&gt;&lt;/p&gt;
-</content:encoded><author>杨继珂</author></item><item><title>Sveltia CMS 最佳实践：从入门到精通的完整指南</title><link>https://iyangjike.github.io/posts/2026-08-24-sveltia-cms-best-practices</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-sveltia-cms-best-practices</guid><description>基于官方文档和社区实践，全面总结 Sveltia CMS 的配置技巧、内容建模、性能优化、安全部署和日常使用的最佳实践。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Sveltia CMS 最佳实践：从入门到精通的完整指南&lt;/h1&gt;
-&lt;p&gt;本文基于 Sveltia CMS 官方文档、Showcase 中 472 个真实站点案例、以及个人实战经验，全面总结 Git-based CMS 的配置技巧和开发最佳实践。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;一、为什么选择 Sveltia CMS&lt;/h2&gt;
-&lt;p&gt;Sveltia CMS 是 Netlify CMS / Decap CMS 的现代替代品，由前 Mozilla 本地化工程师 &lt;a href=&quot;https://github.com/kyoshino&quot;&gt;@kyoshino&lt;/a&gt; 独立开发。它不是 fork，而是用 Svelte 从零重写。&lt;/p&gt;
-&lt;h3&gt;核心优势&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;特性&lt;/th&gt;
-&lt;th&gt;说明&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;轻量&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;整包不到 500 KB（Decap 是 1.5 MB）&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;快速&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;Svelte 编译时优化 + GraphQL API 批量加载&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;安全&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;无已知 XSS 漏洞，不需要 &lt;code&gt;unsafe-eval&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;兼容&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;config.yml 完全兼容 Netlify/Decap CMS&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;免费&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;MIT 开源，个人和商用均免费&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;零维护&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;CDN 加载，自动更新，无需构建工具&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3&gt;与 Decap CMS 的关键区别&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;Sveltia 已修复 Decap 的 730+ 个遗留 issue&lt;/li&gt;
-&lt;li&gt;移动端友好（Decap 移动端体验很差）&lt;/li&gt;
-&lt;li&gt;支持批量删除（Decap 只能逐个删）&lt;/li&gt;
-&lt;li&gt;支持键盘快捷键（Ctrl+E 新建、Ctrl+S 保存、Ctrl+F 搜索）&lt;/li&gt;
-&lt;li&gt;Relation 字段有 Backlinks 侧边栏（查看哪些文章引用了当前条目）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;h2&gt;二、内容建模最佳实践&lt;/h2&gt;
-&lt;h3&gt;2.1 核心理念：一切可复用数据都用独立集合&lt;/h3&gt;
-&lt;p&gt;Sveltia CMS 官方文档反复强调：&lt;strong&gt;凡是需要统一管理、跨文章复用的数据，都建独立集合用 Relation 字段关联&lt;/strong&gt;。&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# ❌ 不推荐：自由文本输入
-tags:
-  widget: list       # 容易出现 JavaScript / javascript / Javascript
-
-# ✅ 推荐：独立集合 + Relation
-tags:
-  widget: relation
-  collection: tags
-  value_field: title
-  search_fields: [title]
-  display_fields: [title]
-  multiple: true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;2.2 推荐的个人博客内容模型&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;src/content/
-├── posts/          # 博客文章（entry collection）
-│   ├── 2026-01-01-hello-world/
-│   │   └── index.md
-│   └── ...
-├── tags/           # 标签（entry collection）
-│   ├── astro.md
-│   ├── web3.md
-│   └── ...
-├── series/         # 系列（entry collection）
-│   ├── javascript-深入.md
-│   └── ...
-├── authors/        # 作者（entry collection，多作者博客时使用）
-│   └── yangjike.md
-├── pages/          # 静态页面（file collection）
-└── images/         # 媒体文件
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;2.3 完整的 config.yml 示例&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;backend:
-  name: github
-  repo: owner/repo
-  branch: main
-  base_url: https://your-oauth-gateway.vercel.app
-  client_id: Ov23liXxxxxxxxx
-  skip_ci: true                    # 保存时不自动触发 CI/CD
-
-media_folder: src/content/posts/images
-public_folder: /images
-
-collections:
-  # ==================== 标签 ====================
-  - name: tags
-    label: 标签
-    label_singular: 标签
-    folder: src/content/tags
-    create: true
-    slug: &apos;{{slug}}&apos;
-    identifier_field: title
-    editor:
-      preview: false
-    fields:
-      - label: 标签名
-        name: title
-        widget: string
-      - label: 描述
-        name: description
-        widget: text
-        required: false
-      - label: 封面图
-        name: image
-        widget: image
-        required: false
-
-  # ==================== 系列 ====================
-  - name: series
-    label: 系列
-    label_singular: 系列
-    folder: src/content/series
-    create: true
-    slug: &apos;{{slug}}&apos;
-    identifier_field: title
-    editor:
-      preview: false
-    fields:
-      - label: 系列名
-        name: title
-        widget: string
-      - label: 描述
-        name: description
-        widget: text
-        required: false
-      - label: 封面图
-        name: image
-        widget: image
-        required: false
-
-  # ==================== 作者 ====================
-  - name: authors
-    label: 作者
-    label_singular: 作者
-    folder: src/content/authors
-    create: true
-    slug: &apos;{{slug}}&apos;
-    identifier_field: name
-    editor:
-      preview: false
-    fields:
-      - label: 姓名
-        name: name
-        widget: string
-      - label: 简介
-        name: bio
-        widget: text
-        required: false
-      - label: 头像
-        name: avatar
-        widget: image
-        required: false
-
-  # ==================== 博客文章 ====================
-  - name: posts
-    label: 博客文章
-    label_singular: 文章
-    folder: src/content/posts
-    path: &apos;{{slug}}/index&apos;
-    create: true
-    slug: &apos;{{year}}-{{month}}-{{day}}-{{slug}}&apos;
-    preview_path: posts/{{slug}}
-    sortable_fields:
-      fields: [title, published, status]
-      default:
-        field: published
-        direction: descending
-    view_groups:
-      groups:
-        - name: status
-          label: 状态
-          field: status
-        - name: year
-          label: 年份
-          field: published
-          pattern: &apos;\d{4}&apos;
-      default: year
-    view_filters:
-      - label: 已发布
-        field: draft
-        pattern: false
-      - label: 草稿
-        field: draft
-        pattern: true
-    editor:
-      preview: false
-    summary: &apos;{{published | date(&quot;YYYY-MM-DD&quot;)}} — {{title}}&apos;
-    fields:
-      - label: 标题
-        name: title
-        widget: string
-      - label: 发布日期
-        name: published
-        widget: datetime
-        format: YYYY-MM-DD
-        date_format: YYYY-MM-DD
-        time_format: false
-      - label: 状态
-        name: status
-        widget: select
-        default: draft
-        options:
-          - { label: 草稿, value: draft }
-          - { label: 已发布, value: published }
-          - { label: 归档, value: archived }
-      - label: 草稿
-        name: draft
-        widget: boolean
-        default: false
-        required: false
-      - label: 摘要
-        name: description
-        widget: text
-        required: false
-      - label: 标签
-        name: tags
-        widget: relation
-        collection: tags
-        value_field: title
-        search_fields: [title]
-        display_fields: [title]
-        multiple: true
-        required: false
-      - label: 系列
-        name: series
-        widget: relation
-        collection: series
-        value_field: title
-        search_fields: [title]
-        display_fields: [title]
-        required: false
-      - label: 作者
-        name: author
-        widget: relation
-        collection: authors
-        value_field: name
-        search_fields: [name]
-        display_fields: [name]
-        required: false
-      - label: 显示目录
-        name: toc
-        widget: boolean
-        default: true
-        required: false
-      - label: 封面图
-        name: coverImage
-        widget: object
-        required: false
-        fields:
-          - label: 图片
-            name: src
-            widget: image
-            required: false
-          - label: 替代文本
-            name: alt
-            widget: string
-            required: false
-      - label: 正文
-        name: body
-        widget: markdown
-
-  # ==================== 页面 ====================
-  - name: pages
-    label: 页面
-    files:
-      - label: 关于
-        name: about
-        file: src/pages/about.md
-        fields:
-          - label: 标题
-            name: title
-            widget: string
-          - label: 正文
-            name: body
-            widget: markdown
-
-locale: zh_CN
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;h2&gt;三、排序、分组、过滤&lt;/h2&gt;
-&lt;h3&gt;3.1 默认排序（sortable_fields）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;sortable_fields:
-  fields: [title, published, status]    # 可排序的字段
-  default:
-    field: published                    # 默认字段
-    direction: descending               # descending 倒序 / ascending 正序
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;direction: descending&lt;/code&gt; 表示最新文章在最上面。用户在列表页可以点击表头切换排序。&lt;/p&gt;
-&lt;h3&gt;3.2 分组视图（view_groups）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;view_groups:
-  groups:
-    - name: status
-      label: 状态
-      field: status              # 按文章状态分组
-    - name: year
-      label: 年份
-      field: published           # 按发布年份分组
-      pattern: &apos;\d{4}&apos;          # 从日期字段提取年份
-  default: year                  # 默认按年份分组
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;效果：文章列表按年份折叠，点开某个年份才看到具体文章。&lt;/p&gt;
-&lt;h3&gt;3.3 预设过滤器（view_filters）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;view_filters:
-  - label: 已发布
-    field: draft
-    pattern: false
-  - label: 草稿
-    field: draft
-    pattern: true
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;列表页顶部会出现快捷过滤按钮，一键筛选。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;四、部署策略&lt;/h2&gt;
-&lt;h3&gt;4.1 skip_ci：控制部署触发&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;backend:
-  skip_ci: true     # 保存时不触发 CI/CD
-&lt;/code&gt;&lt;/pre&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;配置&lt;/th&gt;
-&lt;th&gt;保存按钮行为&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;不设 &lt;code&gt;skip_ci&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;每次保存都触发部署&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;skip_ci: true&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;「保存」不触发，「保存并发布」才触发&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;skip_ci: false&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;反转，「保存」触发，「保存不发布」不触发&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;保存时 commit message 会自动加 &lt;code&gt;[skip ci]&lt;/code&gt; 前缀，GitHub Actions 会跳过构建。&lt;/p&gt;
-&lt;h3&gt;4.2 手动发布按钮&lt;/h3&gt;
-&lt;p&gt;在 GitHub Actions workflow 中添加：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;on:
-  push:
-    branches: [main]
-  repository_dispatch:
-    types: [sveltia-cms-publish]    # 响应 CMS 的&quot;发布变更&quot;按钮
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;配置后 CMS 顶部会出现「发布变更」按钮，一键批量发布所有未部署的修改。&lt;/p&gt;
-&lt;h3&gt;4.3 Entry Summary（列表摘要）&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;summary: &apos;{{published | date(&quot;YYYY-MM-DD&quot;)}} — {{title}}&apos;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;还可以加条件判断：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;summary: &apos;{{draft | ternary(&quot;🔒 &quot;,&quot;&quot;)}}{{title}} ({{tags}})&apos;&apos;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;这样草稿文章前面会显示 🔒 标记。&lt;/p&gt;
-&lt;h3&gt;4.4 集合图标&lt;/h3&gt;
-&lt;p&gt;Sveltia 支持 emoji 作为集合图标：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;- name: posts
-  label: 博客文章
-  icon: 📝
-
-- name: tags
-  label: 标签
-  icon: 🏷️
-
-- name: series
-  label: 系列
-  icon: 📚
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;h2&gt;五、安全最佳实践&lt;/h2&gt;
-&lt;h3&gt;5.1 CDN 引用策略&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;!-- ✅ 推荐：不加版本号，始终用最新版 --&amp;gt;
-&amp;lt;script src=&quot;https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
-
-&amp;lt;!-- ⚠️ 除非需要锁定版本 --&amp;gt;
-&amp;lt;script src=&quot;https://unpkg.com/@sveltia/cms@0.160.0/dist/sveltia-cms.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;始终用最新版可以及时获得安全修复。Sveltia 的依赖更新非常频繁。&lt;/p&gt;
-&lt;h3&gt;5.2 XSS 防护&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;# ✅ 保持默认，不要改
-- name: body
-  widget: markdown
-  sanitize_preview: true    # 默认就是 true，不要设成 false
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;code&gt;sanitize_preview: true&lt;/code&gt; 会通过 DOMPurify 过滤 HTML，防止 XSS 注入。&lt;/p&gt;
-&lt;h3&gt;5.3 CSP 配置&lt;/h3&gt;
-&lt;p&gt;Sveltia CMS 不需要 &lt;code&gt;unsafe-eval&lt;/code&gt; 和 &lt;code&gt;unsafe-inline&lt;/code&gt;：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;style-src &apos;self&apos; &apos;unsafe-inline&apos;;
-font-src &apos;self&apos; https://cdn.jsdelivr.net;
-img-src &apos;self&apos; blob: data:;
-script-src &apos;self&apos; https://unpkg.com;
-connect-src &apos;self&apos; blob: data: https://unpkg.com;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;官方提供了交互式 &lt;a href=&quot;https://sveltiacms.app/en/docs/security#setting-up-content-security-policy&quot;&gt;CSP Builder&lt;/a&gt;，根据你的配置自动生成。&lt;/p&gt;
-&lt;h3&gt;5.4 认证方式&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;方式&lt;/th&gt;
-&lt;th&gt;安全性&lt;/th&gt;
-&lt;th&gt;适用场景&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;PKCE（OAuth）&lt;/td&gt;
-&lt;td&gt;⭐⭐⭐ 高&lt;/td&gt;
-&lt;td&gt;多人团队&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;PAT（Personal Access Token）&lt;/td&gt;
-&lt;td&gt;⭐⭐ 中&lt;/td&gt;
-&lt;td&gt;个人开发者&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;外部 OAuth 网关&lt;/td&gt;
-&lt;td&gt;⭐⭐⭐ 高&lt;/td&gt;
-&lt;td&gt;GitHub Pages 等静态托管&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr /&gt;
-&lt;h2&gt;六、Relation 字段高级用法&lt;/h2&gt;
-&lt;h3&gt;6.1 Backlinks 侧边栏&lt;/h3&gt;
-&lt;p&gt;Sveltia 独有功能。编辑任意条目时，右侧面板会自动显示哪些其他条目引用了当前条目。&lt;/p&gt;
-&lt;p&gt;例如：打开一个标签，可以看到所有用了这个标签的文章。&lt;/p&gt;
-&lt;h3&gt;6.2 过滤器&lt;/h3&gt;
-&lt;p&gt;只显示符合条件的关联条目：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;- name: related_posts
-  widget: relation
-  collection: posts
-  multiple: true
-  filters:
-    - field: draft
-      values: [false]          # 只显示已发布文章
-    - field: status
-      values: [published]      # 只显示已发布状态
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;6.3 下拉阈值&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;dropdown_threshold: 8    # 超过 8 个条目时从复选框切换为搜索下拉
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;默认值是 5。标签少的时候显示复选框（方便勾选），标签多的时候自动切换为带搜索的下拉框。&lt;/p&gt;
-&lt;h3&gt;6.4 多对多关联&lt;/h3&gt;
-&lt;pre&gt;&lt;code&gt;- name: tags
-  widget: relation
-  collection: tags
-  multiple: true
-  min: 0            # 最少选几个
-  max: 10           # 最多选几个
-&lt;/code&gt;&lt;/pre&gt;
-&lt;hr /&gt;
-&lt;h2&gt;七、本地开发工作流&lt;/h2&gt;
-&lt;h3&gt;7.1 无需代理服务器&lt;/h3&gt;
-&lt;p&gt;Sveltia 不需要 &lt;code&gt;netlify-cms-proxy-server&lt;/code&gt; 或 &lt;code&gt;decap-server&lt;/code&gt;。直接在 Chromium 浏览器中操作本地文件系统：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;# 1. 启动 Astro
-npm run dev
-
-# 2. 在 Chrome/Edge/Brave 中打开
-open http://localhost:4321/admin/
-
-# 3. 编辑内容，直接写入本地文件
-# 4. 手动 commit
-git add .
-git commit -m &quot;更新文章&quot;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;限制：&lt;/strong&gt; 需要 Chrome/Edge/Brave（Firefox/Safari 不支持 File System Access API）。且 CMS 不会自动 commit，需要手动用 Git 客户端操作。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;八、OAuth 网关搭建&lt;/h2&gt;
-&lt;p&gt;如果你的博客托管在 GitHub Pages 等不支持服务端代码的平台上，需要自建 OAuth 网关。&lt;/p&gt;
-&lt;h3&gt;8.1 Vercel Serverless 方案&lt;/h3&gt;
-&lt;p&gt;项目结构：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;decap-oauth-vercel/
-├── package.json
-├── vercel.json           # 路由重写
-├── index.html
-└── api/
-    ├── auth.js           # 授权端点
-    └── callback.js       # 回调端点
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;vercel.json（路由重写是关键）：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;{
-  &quot;rewrites&quot;: [
-    { &quot;source&quot;: &quot;/auth&quot;, &quot;destination&quot;: &quot;/api/auth&quot; },
-    { &quot;source&quot;: &quot;/callback&quot;, &quot;destination&quot;: &quot;/api/callback&quot; }
-  ]
-}
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;
-&lt;p&gt;⚠️ &lt;strong&gt;关键坑：&lt;/strong&gt; Vercel Serverless Functions 默认挂在 &lt;code&gt;/api/&lt;/code&gt; 下，但 CMS 请求的是 &lt;code&gt;/auth&lt;/code&gt; 和 &lt;code&gt;/callback&lt;/code&gt;。必须用 rewrites 映射。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3&gt;8.2 callback.js 的两步握手协议&lt;/h3&gt;
-&lt;p&gt;Decap/Sveltia CMS 的 OAuth 需要一个特殊的两步握手：&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;// 第一步：发送授权开始信号
-window.opener.postMessage(&apos;authorizing:github&apos;, &apos;*&apos;);
-
-// 第二步：等待父窗口回复
-window.addEventListener(&apos;message&apos;, function receiveMessage(e) {
-  window.opener.postMessage(
-    &apos;authorization:github:success:&apos; + JSON.stringify({ token, provider: &apos;github&apos; }),
-    e.origin
-  );
-  window.close();
-});
-
-// 兜底：1 秒后直接发送
-setTimeout(function() {
-  window.opener.postMessage(/* token */, &apos;*&apos;);
-  window.close();
-}, 1000);
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;
-&lt;p&gt;⚠️ &lt;strong&gt;关键坑：&lt;/strong&gt; 如果跳过第一步直接发 token，CMS 不会处理这条消息，表现为登录后卡住不跳转。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr /&gt;
-&lt;h2&gt;九、常见问题与解决方案&lt;/h2&gt;
-&lt;h3&gt;9.1 文章在博客显示但 CMS 里看不到&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;原因：&lt;/strong&gt; &lt;code&gt;config.yml&lt;/code&gt; 中 &lt;code&gt;path: &apos;{{slug}}/index&apos;&lt;/code&gt; 要求每篇文章是 &lt;code&gt;文件夹/index.md&lt;/code&gt; 结构，扁平 &lt;code&gt;.md&lt;/code&gt; 文件不会被 CMS 识别。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;cd src/content/posts
-for f in *.md; do
-  slug=&quot;${f%.md}&quot;
-  mkdir -p &quot;$slug&quot;
-  mv &quot;$f&quot; &quot;$slug/index.md&quot;
-done
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h3&gt;9.2 编辑时不能顺手创建新标签&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;限制：&lt;/strong&gt; Relation 字段目前不支持&quot;边编辑边新建&quot;。需要先去标签集合创建，再回来选择。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;状态：&lt;/strong&gt; 官方 issue #493，计划后续版本支持。&lt;/p&gt;
-&lt;h3&gt;9.3 标签大小写不一致&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt; 使用 Relation 字段 + 独立标签集合，标签名统一管理，杜绝 &lt;code&gt;JavaScript&lt;/code&gt; / &lt;code&gt;javascript&lt;/code&gt; 问题。&lt;/p&gt;
-&lt;h3&gt;9.4 构建失败：coverImage: null&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;原因：&lt;/strong&gt; Astro content schema 中 &lt;code&gt;coverImage&lt;/code&gt; 定义为 object，&lt;code&gt;null&lt;/code&gt; 不合法。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt; 删除 frontmatter 中的 &lt;code&gt;coverImage: null&lt;/code&gt; 行。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2&gt;十、Sveltia CMS 的已知限制&lt;/h2&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;限制&lt;/th&gt;
-&lt;th&gt;状态&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;编辑时不能新建关联条目&lt;/td&gt;
-&lt;td&gt;issue #493，计划修复&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;不支持嵌套集合&lt;/td&gt;
-&lt;td&gt;计划 1.0 前实现&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;不支持级联删除&lt;/td&gt;
-&lt;td&gt;删除标签不会自动清理文章引用&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;不支持 Deploy Preview Links&lt;/td&gt;
-&lt;td&gt;尚未实现&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;不支持条件字段（依赖显示）&lt;/td&gt;
-&lt;td&gt;可用 variable types 变通&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;本地开发需要 Chromium 浏览器&lt;/td&gt;
-&lt;td&gt;Firefox/Safari 不支持 File System Access API&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;单开发者维护&lt;/td&gt;
-&lt;td&gt;更新节奏可能不如团队项目快&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr /&gt;
-&lt;h2&gt;十一、社区资源&lt;/h2&gt;
-&lt;h3&gt;官方资源&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;文档：https://sveltiacms.app/en/docs/&lt;/li&gt;
-&lt;li&gt;Showcase（472 个真实案例）：https://sveltiacms.app/en/showcase&lt;/li&gt;
-&lt;li&gt;GitHub：https://github.com/sveltia/sveltia-cms&lt;/li&gt;
-&lt;li&gt;Discord：https://discord.com/invite/5hwCGqup5b&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3&gt;Astro + Sveltia 社区 Starter&lt;/h3&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;项目&lt;/th&gt;
-&lt;th&gt;作者&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&quot;https://github.com/majesticooss/astros&quot;&gt;Astros&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;zanhk&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&quot;https://github.com/yacosta738/astro-cms&quot;&gt;Astro i18n Starter&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;yacosta738&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;a href=&quot;https://github.com/knolljo/astro-sveltia-cms&quot;&gt;astro-sveltia-cms&lt;/a&gt;&lt;/td&gt;
-&lt;td&gt;knolljo&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;h3&gt;推荐阅读&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/successor-to-netlify-cms&quot;&gt;Successor to Netlify/Decap CMS&lt;/a&gt; — 730+ 个已修复的 Decap issue 清单&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/content-modeling&quot;&gt;Content Modeling Guide&lt;/a&gt; — 官方内容建模指南&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/workflows/local&quot;&gt;Local Development Workflow&lt;/a&gt; — 本地开发无需代理服务器&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr /&gt;
-&lt;h2&gt;十二、总结&lt;/h2&gt;
-&lt;p&gt;Sveltia CMS 的核心设计哲学可以概括为：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;strong&gt;一切可复用的数据都用独立集合&lt;/strong&gt; — 标签、系列、作者都应该是 Relation&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;默认使用最新版&lt;/strong&gt; — CDN 不加版本号，自动获得安全更新&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;skip_ci 控制部署&lt;/strong&gt; — 批量编辑后手动发布，节省构建配额&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;sortable_fields + view_groups&lt;/strong&gt; — 让文章列表一目了然&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;不要关闭 sanitize_preview&lt;/strong&gt; — XSS 防护的最后一道防线&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;本地开发用 Chrome&lt;/strong&gt; — File System Access API 目前只有 Chromium 支持&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;从 Decap CMS 迁移到 Sveltia 只需要改一行 HTML，但体验提升是全面的——更快、更安全、更好用。如果你的博客还在用 Decap CMS，现在就是迁移的最佳时机。&lt;/p&gt;
-&lt;hr /&gt;
-&lt;p&gt;&lt;em&gt;参考：Sveltia CMS 官方文档、Showcase 案例、个人实战经验。最后更新：2026-08-24&lt;/em&gt;&lt;/p&gt;
-</content:encoded><author>杨继珂</author></item><item><title>Astro + Decap CMS 博客搭建完全指南（含踩坑全记录）</title><link>https://iyangjike.github.io/posts/2026-08-24-astro-decap-sveltia-cms-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-astro-decap-sveltia-cms-guide</guid><description>从零搭建 Astro 博客、集成 CMS 内容管理、Vercel 部署 OAuth 网关的完整指南，含 7 个踩坑记录和 Decap vs Sveltia 对比。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Astro + Decap CMS 博客搭建完全指南（含 GitHub OAuth 踩坑全记录）&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>iYangJike</title><description>Web3 开发笔记 — Solidity, React, 智能合约</description><link>https://iyangjike.github.io</link><item><title>Astro + Decap CMS 博客搭建完全指南（含踩坑全记录）</title><link>https://iyangjike.github.io/posts/2026-08-24-astro-decap-sveltia-cms-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-astro-decap-sveltia-cms-guide</guid><description>从零搭建 Astro 博客、集成 CMS 内容管理、Vercel 部署 OAuth 网关的完整指南，含 7 个踩坑记录和 Decap vs Sveltia 对比。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Astro + Decap CMS 博客搭建完全指南（含 GitHub OAuth 踩坑全记录）&lt;/h1&gt;
 &lt;p&gt;本文记录从零搭建一个 Astro 博客、集成 Decap CMS 内容管理、并通过 Vercel 部署 GitHub OAuth 网关的完整过程。每一步都经过实战验证，包含所有踩过的坑和最终解决方案。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h2&gt;一、项目概览&lt;/h2&gt;
@@ -1898,4 +902,1000 @@ done
 &lt;p&gt;最核心的难点是 OAuth 认证——从 PKCE 到自建网关，经历了路由不匹配、缺少握手协议、redirect_uri 缺失等多个坑。但只要理解了 Decap CMS 的 OAuth 握手流程（&lt;code&gt;authorizing:github&lt;/code&gt; → 等待回复 → &lt;code&gt;authorization:github:success:{...}&lt;/code&gt;），一切都迎刃而解。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;&lt;em&gt;最后更新：2026-08-21&lt;/em&gt;&lt;/p&gt;
+</content:encoded><author>杨继珂</author></item><item><title>Sveltia CMS 最佳实践：从入门到精通的完整指南</title><link>https://iyangjike.github.io/posts/2026-08-24-sveltia-cms-best-practices</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-sveltia-cms-best-practices</guid><description>基于官方文档和社区实践，全面总结 Sveltia CMS 的配置技巧、内容建模、性能优化、安全部署和日常使用的最佳实践。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;Sveltia CMS 最佳实践：从入门到精通的完整指南&lt;/h1&gt;
+&lt;p&gt;本文基于 Sveltia CMS 官方文档、Showcase 中 472 个真实站点案例、以及个人实战经验，全面总结 Git-based CMS 的配置技巧和开发最佳实践。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;一、为什么选择 Sveltia CMS&lt;/h2&gt;
+&lt;p&gt;Sveltia CMS 是 Netlify CMS / Decap CMS 的现代替代品，由前 Mozilla 本地化工程师 &lt;a href=&quot;https://github.com/kyoshino&quot;&gt;@kyoshino&lt;/a&gt; 独立开发。它不是 fork，而是用 Svelte 从零重写。&lt;/p&gt;
+&lt;h3&gt;核心优势&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;特性&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;轻量&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;整包不到 500 KB（Decap 是 1.5 MB）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;快速&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Svelte 编译时优化 + GraphQL API 批量加载&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;安全&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;无已知 XSS 漏洞，不需要 &lt;code&gt;unsafe-eval&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;兼容&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;config.yml 完全兼容 Netlify/Decap CMS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;免费&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;MIT 开源，个人和商用均免费&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;零维护&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;CDN 加载，自动更新，无需构建工具&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;与 Decap CMS 的关键区别&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Sveltia 已修复 Decap 的 730+ 个遗留 issue&lt;/li&gt;
+&lt;li&gt;移动端友好（Decap 移动端体验很差）&lt;/li&gt;
+&lt;li&gt;支持批量删除（Decap 只能逐个删）&lt;/li&gt;
+&lt;li&gt;支持键盘快捷键（Ctrl+E 新建、Ctrl+S 保存、Ctrl+F 搜索）&lt;/li&gt;
+&lt;li&gt;Relation 字段有 Backlinks 侧边栏（查看哪些文章引用了当前条目）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2&gt;二、内容建模最佳实践&lt;/h2&gt;
+&lt;h3&gt;2.1 核心理念：一切可复用数据都用独立集合&lt;/h3&gt;
+&lt;p&gt;Sveltia CMS 官方文档反复强调：&lt;strong&gt;凡是需要统一管理、跨文章复用的数据，都建独立集合用 Relation 字段关联&lt;/strong&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ❌ 不推荐：自由文本输入
+tags:
+  widget: list       # 容易出现 JavaScript / javascript / Javascript
+
+# ✅ 推荐：独立集合 + Relation
+tags:
+  widget: relation
+  collection: tags
+  value_field: title
+  search_fields: [title]
+  display_fields: [title]
+  multiple: true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2.2 推荐的个人博客内容模型&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;src/content/
+├── posts/          # 博客文章（entry collection）
+│   ├── 2026-01-01-hello-world/
+│   │   └── index.md
+│   └── ...
+├── tags/           # 标签（entry collection）
+│   ├── astro.md
+│   ├── web3.md
+│   └── ...
+├── series/         # 系列（entry collection）
+│   ├── javascript-深入.md
+│   └── ...
+├── authors/        # 作者（entry collection，多作者博客时使用）
+│   └── yangjike.md
+├── pages/          # 静态页面（file collection）
+└── images/         # 媒体文件
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;2.3 完整的 config.yml 示例&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;backend:
+  name: github
+  repo: owner/repo
+  branch: main
+  base_url: https://your-oauth-gateway.vercel.app
+  client_id: Ov23liXxxxxxxxx
+  skip_ci: true                    # 保存时不自动触发 CI/CD
+
+media_folder: src/content/posts/images
+public_folder: /images
+
+collections:
+  # ==================== 标签 ====================
+  - name: tags
+    label: 标签
+    label_singular: 标签
+    folder: src/content/tags
+    create: true
+    slug: &apos;{{slug}}&apos;
+    identifier_field: title
+    editor:
+      preview: false
+    fields:
+      - label: 标签名
+        name: title
+        widget: string
+      - label: 描述
+        name: description
+        widget: text
+        required: false
+      - label: 封面图
+        name: image
+        widget: image
+        required: false
+
+  # ==================== 系列 ====================
+  - name: series
+    label: 系列
+    label_singular: 系列
+    folder: src/content/series
+    create: true
+    slug: &apos;{{slug}}&apos;
+    identifier_field: title
+    editor:
+      preview: false
+    fields:
+      - label: 系列名
+        name: title
+        widget: string
+      - label: 描述
+        name: description
+        widget: text
+        required: false
+      - label: 封面图
+        name: image
+        widget: image
+        required: false
+
+  # ==================== 作者 ====================
+  - name: authors
+    label: 作者
+    label_singular: 作者
+    folder: src/content/authors
+    create: true
+    slug: &apos;{{slug}}&apos;
+    identifier_field: name
+    editor:
+      preview: false
+    fields:
+      - label: 姓名
+        name: name
+        widget: string
+      - label: 简介
+        name: bio
+        widget: text
+        required: false
+      - label: 头像
+        name: avatar
+        widget: image
+        required: false
+
+  # ==================== 博客文章 ====================
+  - name: posts
+    label: 博客文章
+    label_singular: 文章
+    folder: src/content/posts
+    path: &apos;{{slug}}/index&apos;
+    create: true
+    slug: &apos;{{year}}-{{month}}-{{day}}-{{slug}}&apos;
+    preview_path: posts/{{slug}}
+    sortable_fields:
+      fields: [title, published, status]
+      default:
+        field: published
+        direction: descending
+    view_groups:
+      groups:
+        - name: status
+          label: 状态
+          field: status
+        - name: year
+          label: 年份
+          field: published
+          pattern: &apos;\d{4}&apos;
+      default: year
+    view_filters:
+      - label: 已发布
+        field: draft
+        pattern: false
+      - label: 草稿
+        field: draft
+        pattern: true
+    editor:
+      preview: false
+    summary: &apos;{{published | date(&quot;YYYY-MM-DD&quot;)}} — {{title}}&apos;
+    fields:
+      - label: 标题
+        name: title
+        widget: string
+      - label: 发布日期
+        name: published
+        widget: datetime
+        format: YYYY-MM-DD
+        date_format: YYYY-MM-DD
+        time_format: false
+      - label: 状态
+        name: status
+        widget: select
+        default: draft
+        options:
+          - { label: 草稿, value: draft }
+          - { label: 已发布, value: published }
+          - { label: 归档, value: archived }
+      - label: 草稿
+        name: draft
+        widget: boolean
+        default: false
+        required: false
+      - label: 摘要
+        name: description
+        widget: text
+        required: false
+      - label: 标签
+        name: tags
+        widget: relation
+        collection: tags
+        value_field: title
+        search_fields: [title]
+        display_fields: [title]
+        multiple: true
+        required: false
+      - label: 系列
+        name: series
+        widget: relation
+        collection: series
+        value_field: title
+        search_fields: [title]
+        display_fields: [title]
+        required: false
+      - label: 作者
+        name: author
+        widget: relation
+        collection: authors
+        value_field: name
+        search_fields: [name]
+        display_fields: [name]
+        required: false
+      - label: 显示目录
+        name: toc
+        widget: boolean
+        default: true
+        required: false
+      - label: 封面图
+        name: coverImage
+        widget: object
+        required: false
+        fields:
+          - label: 图片
+            name: src
+            widget: image
+            required: false
+          - label: 替代文本
+            name: alt
+            widget: string
+            required: false
+      - label: 正文
+        name: body
+        widget: markdown
+
+  # ==================== 页面 ====================
+  - name: pages
+    label: 页面
+    files:
+      - label: 关于
+        name: about
+        file: src/pages/about.md
+        fields:
+          - label: 标题
+            name: title
+            widget: string
+          - label: 正文
+            name: body
+            widget: markdown
+
+locale: zh_CN
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;三、排序、分组、过滤&lt;/h2&gt;
+&lt;h3&gt;3.1 默认排序（sortable_fields）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;sortable_fields:
+  fields: [title, published, status]    # 可排序的字段
+  default:
+    field: published                    # 默认字段
+    direction: descending               # descending 倒序 / ascending 正序
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;direction: descending&lt;/code&gt; 表示最新文章在最上面。用户在列表页可以点击表头切换排序。&lt;/p&gt;
+&lt;h3&gt;3.2 分组视图（view_groups）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;view_groups:
+  groups:
+    - name: status
+      label: 状态
+      field: status              # 按文章状态分组
+    - name: year
+      label: 年份
+      field: published           # 按发布年份分组
+      pattern: &apos;\d{4}&apos;          # 从日期字段提取年份
+  default: year                  # 默认按年份分组
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;效果：文章列表按年份折叠，点开某个年份才看到具体文章。&lt;/p&gt;
+&lt;h3&gt;3.3 预设过滤器（view_filters）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;view_filters:
+  - label: 已发布
+    field: draft
+    pattern: false
+  - label: 草稿
+    field: draft
+    pattern: true
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;列表页顶部会出现快捷过滤按钮，一键筛选。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;四、部署策略&lt;/h2&gt;
+&lt;h3&gt;4.1 skip_ci：控制部署触发&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;backend:
+  skip_ci: true     # 保存时不触发 CI/CD
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;配置&lt;/th&gt;
+&lt;th&gt;保存按钮行为&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;不设 &lt;code&gt;skip_ci&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;每次保存都触发部署&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;skip_ci: true&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;「保存」不触发，「保存并发布」才触发&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;skip_ci: false&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;反转，「保存」触发，「保存不发布」不触发&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;保存时 commit message 会自动加 &lt;code&gt;[skip ci]&lt;/code&gt; 前缀，GitHub Actions 会跳过构建。&lt;/p&gt;
+&lt;h3&gt;4.2 手动发布按钮&lt;/h3&gt;
+&lt;p&gt;在 GitHub Actions workflow 中添加：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [sveltia-cms-publish]    # 响应 CMS 的&quot;发布变更&quot;按钮
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;配置后 CMS 顶部会出现「发布变更」按钮，一键批量发布所有未部署的修改。&lt;/p&gt;
+&lt;h3&gt;4.3 Entry Summary（列表摘要）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;summary: &apos;{{published | date(&quot;YYYY-MM-DD&quot;)}} — {{title}}&apos;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;还可以加条件判断：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;summary: &apos;{{draft | ternary(&quot;🔒 &quot;,&quot;&quot;)}}{{title}} ({{tags}})&apos;&apos;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这样草稿文章前面会显示 🔒 标记。&lt;/p&gt;
+&lt;h3&gt;4.4 集合图标&lt;/h3&gt;
+&lt;p&gt;Sveltia 支持 emoji 作为集合图标：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- name: posts
+  label: 博客文章
+  icon: 📝
+
+- name: tags
+  label: 标签
+  icon: 🏷️
+
+- name: series
+  label: 系列
+  icon: 📚
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;五、安全最佳实践&lt;/h2&gt;
+&lt;h3&gt;5.1 CDN 引用策略&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- ✅ 推荐：不加版本号，始终用最新版 --&amp;gt;
+&amp;lt;script src=&quot;https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+
+&amp;lt;!-- ⚠️ 除非需要锁定版本 --&amp;gt;
+&amp;lt;script src=&quot;https://unpkg.com/@sveltia/cms@0.160.0/dist/sveltia-cms.js&quot;&amp;gt;&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;始终用最新版可以及时获得安全修复。Sveltia 的依赖更新非常频繁。&lt;/p&gt;
+&lt;h3&gt;5.2 XSS 防护&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# ✅ 保持默认，不要改
+- name: body
+  widget: markdown
+  sanitize_preview: true    # 默认就是 true，不要设成 false
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;sanitize_preview: true&lt;/code&gt; 会通过 DOMPurify 过滤 HTML，防止 XSS 注入。&lt;/p&gt;
+&lt;h3&gt;5.3 CSP 配置&lt;/h3&gt;
+&lt;p&gt;Sveltia CMS 不需要 &lt;code&gt;unsafe-eval&lt;/code&gt; 和 &lt;code&gt;unsafe-inline&lt;/code&gt;：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;style-src &apos;self&apos; &apos;unsafe-inline&apos;;
+font-src &apos;self&apos; https://cdn.jsdelivr.net;
+img-src &apos;self&apos; blob: data:;
+script-src &apos;self&apos; https://unpkg.com;
+connect-src &apos;self&apos; blob: data: https://unpkg.com;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;官方提供了交互式 &lt;a href=&quot;https://sveltiacms.app/en/docs/security#setting-up-content-security-policy&quot;&gt;CSP Builder&lt;/a&gt;，根据你的配置自动生成。&lt;/p&gt;
+&lt;h3&gt;5.4 认证方式&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;方式&lt;/th&gt;
+&lt;th&gt;安全性&lt;/th&gt;
+&lt;th&gt;适用场景&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;PKCE（OAuth）&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐ 高&lt;/td&gt;
+&lt;td&gt;多人团队&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;PAT（Personal Access Token）&lt;/td&gt;
+&lt;td&gt;⭐⭐ 中&lt;/td&gt;
+&lt;td&gt;个人开发者&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;外部 OAuth 网关&lt;/td&gt;
+&lt;td&gt;⭐⭐⭐ 高&lt;/td&gt;
+&lt;td&gt;GitHub Pages 等静态托管&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;六、Relation 字段高级用法&lt;/h2&gt;
+&lt;h3&gt;6.1 Backlinks 侧边栏&lt;/h3&gt;
+&lt;p&gt;Sveltia 独有功能。编辑任意条目时，右侧面板会自动显示哪些其他条目引用了当前条目。&lt;/p&gt;
+&lt;p&gt;例如：打开一个标签，可以看到所有用了这个标签的文章。&lt;/p&gt;
+&lt;h3&gt;6.2 过滤器&lt;/h3&gt;
+&lt;p&gt;只显示符合条件的关联条目：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- name: related_posts
+  widget: relation
+  collection: posts
+  multiple: true
+  filters:
+    - field: draft
+      values: [false]          # 只显示已发布文章
+    - field: status
+      values: [published]      # 只显示已发布状态
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;6.3 下拉阈值&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;dropdown_threshold: 8    # 超过 8 个条目时从复选框切换为搜索下拉
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;默认值是 5。标签少的时候显示复选框（方便勾选），标签多的时候自动切换为带搜索的下拉框。&lt;/p&gt;
+&lt;h3&gt;6.4 多对多关联&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;- name: tags
+  widget: relation
+  collection: tags
+  multiple: true
+  min: 0            # 最少选几个
+  max: 10           # 最多选几个
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;七、本地开发工作流&lt;/h2&gt;
+&lt;h3&gt;7.1 无需代理服务器&lt;/h3&gt;
+&lt;p&gt;Sveltia 不需要 &lt;code&gt;netlify-cms-proxy-server&lt;/code&gt; 或 &lt;code&gt;decap-server&lt;/code&gt;。直接在 Chromium 浏览器中操作本地文件系统：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 1. 启动 Astro
+npm run dev
+
+# 2. 在 Chrome/Edge/Brave 中打开
+open http://localhost:4321/admin/
+
+# 3. 编辑内容，直接写入本地文件
+# 4. 手动 commit
+git add .
+git commit -m &quot;更新文章&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;限制：&lt;/strong&gt; 需要 Chrome/Edge/Brave（Firefox/Safari 不支持 File System Access API）。且 CMS 不会自动 commit，需要手动用 Git 客户端操作。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;八、OAuth 网关搭建&lt;/h2&gt;
+&lt;p&gt;如果你的博客托管在 GitHub Pages 等不支持服务端代码的平台上，需要自建 OAuth 网关。&lt;/p&gt;
+&lt;h3&gt;8.1 Vercel Serverless 方案&lt;/h3&gt;
+&lt;p&gt;项目结构：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;decap-oauth-vercel/
+├── package.json
+├── vercel.json           # 路由重写
+├── index.html
+└── api/
+    ├── auth.js           # 授权端点
+    └── callback.js       # 回调端点
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;vercel.json（路由重写是关键）：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &quot;rewrites&quot;: [
+    { &quot;source&quot;: &quot;/auth&quot;, &quot;destination&quot;: &quot;/api/auth&quot; },
+    { &quot;source&quot;: &quot;/callback&quot;, &quot;destination&quot;: &quot;/api/callback&quot; }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;关键坑：&lt;/strong&gt; Vercel Serverless Functions 默认挂在 &lt;code&gt;/api/&lt;/code&gt; 下，但 CMS 请求的是 &lt;code&gt;/auth&lt;/code&gt; 和 &lt;code&gt;/callback&lt;/code&gt;。必须用 rewrites 映射。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;8.2 callback.js 的两步握手协议&lt;/h3&gt;
+&lt;p&gt;Decap/Sveltia CMS 的 OAuth 需要一个特殊的两步握手：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;// 第一步：发送授权开始信号
+window.opener.postMessage(&apos;authorizing:github&apos;, &apos;*&apos;);
+
+// 第二步：等待父窗口回复
+window.addEventListener(&apos;message&apos;, function receiveMessage(e) {
+  window.opener.postMessage(
+    &apos;authorization:github:success:&apos; + JSON.stringify({ token, provider: &apos;github&apos; }),
+    e.origin
+  );
+  window.close();
+});
+
+// 兜底：1 秒后直接发送
+setTimeout(function() {
+  window.opener.postMessage(/* token */, &apos;*&apos;);
+  window.close();
+}, 1000);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠️ &lt;strong&gt;关键坑：&lt;/strong&gt; 如果跳过第一步直接发 token，CMS 不会处理这条消息，表现为登录后卡住不跳转。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h2&gt;九、常见问题与解决方案&lt;/h2&gt;
+&lt;h3&gt;9.1 文章在博客显示但 CMS 里看不到&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;原因：&lt;/strong&gt; &lt;code&gt;config.yml&lt;/code&gt; 中 &lt;code&gt;path: &apos;{{slug}}/index&apos;&lt;/code&gt; 要求每篇文章是 &lt;code&gt;文件夹/index.md&lt;/code&gt; 结构，扁平 &lt;code&gt;.md&lt;/code&gt; 文件不会被 CMS 识别。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd src/content/posts
+for f in *.md; do
+  slug=&quot;${f%.md}&quot;
+  mkdir -p &quot;$slug&quot;
+  mv &quot;$f&quot; &quot;$slug/index.md&quot;
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;9.2 编辑时不能顺手创建新标签&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;限制：&lt;/strong&gt; Relation 字段目前不支持&quot;边编辑边新建&quot;。需要先去标签集合创建，再回来选择。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;状态：&lt;/strong&gt; 官方 issue #493，计划后续版本支持。&lt;/p&gt;
+&lt;h3&gt;9.3 标签大小写不一致&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt; 使用 Relation 字段 + 独立标签集合，标签名统一管理，杜绝 &lt;code&gt;JavaScript&lt;/code&gt; / &lt;code&gt;javascript&lt;/code&gt; 问题。&lt;/p&gt;
+&lt;h3&gt;9.4 构建失败：coverImage: null&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;原因：&lt;/strong&gt; Astro content schema 中 &lt;code&gt;coverImage&lt;/code&gt; 定义为 object，&lt;code&gt;null&lt;/code&gt; 不合法。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解决：&lt;/strong&gt; 删除 frontmatter 中的 &lt;code&gt;coverImage: null&lt;/code&gt; 行。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;十、Sveltia CMS 的已知限制&lt;/h2&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;限制&lt;/th&gt;
+&lt;th&gt;状态&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;编辑时不能新建关联条目&lt;/td&gt;
+&lt;td&gt;issue #493，计划修复&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不支持嵌套集合&lt;/td&gt;
+&lt;td&gt;计划 1.0 前实现&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不支持级联删除&lt;/td&gt;
+&lt;td&gt;删除标签不会自动清理文章引用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不支持 Deploy Preview Links&lt;/td&gt;
+&lt;td&gt;尚未实现&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不支持条件字段（依赖显示）&lt;/td&gt;
+&lt;td&gt;可用 variable types 变通&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;本地开发需要 Chromium 浏览器&lt;/td&gt;
+&lt;td&gt;Firefox/Safari 不支持 File System Access API&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;单开发者维护&lt;/td&gt;
+&lt;td&gt;更新节奏可能不如团队项目快&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;十一、社区资源&lt;/h2&gt;
+&lt;h3&gt;官方资源&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;文档：https://sveltiacms.app/en/docs/&lt;/li&gt;
+&lt;li&gt;Showcase（472 个真实案例）：https://sveltiacms.app/en/showcase&lt;/li&gt;
+&lt;li&gt;GitHub：https://github.com/sveltia/sveltia-cms&lt;/li&gt;
+&lt;li&gt;Discord：https://discord.com/invite/5hwCGqup5b&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Astro + Sveltia 社区 Starter&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;项目&lt;/th&gt;
+&lt;th&gt;作者&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/majesticooss/astros&quot;&gt;Astros&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;zanhk&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/yacosta738/astro-cms&quot;&gt;Astro i18n Starter&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;yacosta738&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/knolljo/astro-sveltia-cms&quot;&gt;astro-sveltia-cms&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;knolljo&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;推荐阅读&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/successor-to-netlify-cms&quot;&gt;Successor to Netlify/Decap CMS&lt;/a&gt; — 730+ 个已修复的 Decap issue 清单&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/content-modeling&quot;&gt;Content Modeling Guide&lt;/a&gt; — 官方内容建模指南&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://sveltiacms.app/en/docs/workflows/local&quot;&gt;Local Development Workflow&lt;/a&gt; — 本地开发无需代理服务器&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;h2&gt;十二、总结&lt;/h2&gt;
+&lt;p&gt;Sveltia CMS 的核心设计哲学可以概括为：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;一切可复用的数据都用独立集合&lt;/strong&gt; — 标签、系列、作者都应该是 Relation&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;默认使用最新版&lt;/strong&gt; — CDN 不加版本号，自动获得安全更新&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;skip_ci 控制部署&lt;/strong&gt; — 批量编辑后手动发布，节省构建配额&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;sortable_fields + view_groups&lt;/strong&gt; — 让文章列表一目了然&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;不要关闭 sanitize_preview&lt;/strong&gt; — XSS 防护的最后一道防线&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;本地开发用 Chrome&lt;/strong&gt; — File System Access API 目前只有 Chromium 支持&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;从 Decap CMS 迁移到 Sveltia 只需要改一行 HTML，但体验提升是全面的——更快、更安全、更好用。如果你的博客还在用 Decap CMS，现在就是迁移的最佳时机。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;参考：Sveltia CMS 官方文档、Showcase 案例、个人实战经验。最后更新：2026-08-24&lt;/em&gt;&lt;/p&gt;
+</content:encoded><author>杨继珂</author></item><item><title>DiceBear 完全指南：开源 SVG 头像库的 8 种玩法</title><link>https://iyangjike.github.io/posts/2026-08-24-dicebear-avatar-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-dicebear-avatar-guide</guid><description>9.3k Star 的开源头像库 DiceBear 完全介绍：从 HTTP API 到 6 种语言 SDK、55 种风格、Figma 插件、Docker 私有部署、CSS 动画头像等 8 种进阶玩法。</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;DiceBear 完全指南：开源 SVG 头像库的 8 种玩法&lt;/h1&gt;
+&lt;h2&gt;一、DiceBear 是什么&lt;/h2&gt;
+&lt;p&gt;DiceBear 是一个&lt;strong&gt;开源头像生成库&lt;/strong&gt;，GitHub 9.3k Stars，核心原理很简单：输入一个字符串（用户名、邮箱、ID 等），输出一个固定的 SVG 头像。同一个 seed 永远生成同一张图。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&quot;iYangJike&quot; → 🧑‍💻  ← 每次都是这个，一模一样
+&quot;John&quot;      → 👨‍🔬  ← 完全不同
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这意味着你不需要让用户上传头像，不需要存图片文件，不需要处理裁剪缩放。只需要存一个字符串，需要展示的时候实时生成。&lt;/p&gt;
+&lt;h3&gt;核心数据&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;指标&lt;/th&gt;
+&lt;th&gt;数据&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;GitHub Stars&lt;/td&gt;
+&lt;td&gt;9.3k&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;License&lt;/td&gt;
+&lt;td&gt;MIT（代码），风格各自授权&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;头像风格数&lt;/td&gt;
+&lt;td&gt;55 种&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;支持语言&lt;/td&gt;
+&lt;td&gt;JavaScript、Python、PHP、Rust、Go、Dart（6 种）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;输出格式&lt;/td&gt;
+&lt;td&gt;SVG、PNG、WebP、JPEG&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;维护状态&lt;/td&gt;
+&lt;td&gt;活跃开发中，v10 为当前大版本&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;二、六种接入方式&lt;/h2&gt;
+&lt;h3&gt;方式一：HTTP API（最方便，零代码）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;示例&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;seed&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;种子字符串&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;?seed=alice&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;size&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;输出尺寸&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;?size=512&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;format&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;输出格式&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;svg&lt;/code&gt; / &lt;code&gt;png&lt;/code&gt; / &lt;code&gt;webp&lt;/code&gt; / &lt;code&gt;jpg&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;backgroundColor&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;背景色&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;?backgroundColor=ff0000&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;风格参数&lt;/td&gt;
+&lt;td&gt;不同风格不同&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;?mouth=happy01&amp;amp;eyes=variant20&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;免费、无限调用、不需要注册。想私有部署也可以，一个 Docker 容器搞定。&lt;/p&gt;
+&lt;h3&gt;方式二：JavaScript/TypeScript（前端/Node.js）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;import { Avatar } from &apos;@dicebear/core&apos;;
+import definition from &apos;@dicebear/styles/lorelei/json&apos; with { type: &apos;json&apos; };
+
+const avatar = new Avatar(definition, {
+  seed: &apos;iYangJike&apos;,
+  size: 512,
+  backgroundColor: [&apos;#1a1a2e&apos;],
+  mouth: [&apos;happy01&apos;],
+});
+
+avatar.toString();   // SVG 字符串 → 直接嵌入 HTML
+avatar.toDataUri();  // data:image/svg+xml;... → img src
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;方式三：Python&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;from dicebear_core import Avatar
+import json
+
+with open(&apos;lorelei.json&apos;) as f:
+    definition = json.load(f)
+
+avatar = Avatar(definition, seed=&apos;iYangJike&apos;, size=512)
+svg_string = str(avatar)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;方式四：CLI（命令行批量生成）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 一次生成 100 个头像
+npx dicebear lorelei --count 100 --format png --size 256
+
+# 从文件读取 seed 列表批量生成
+npx dicebear lorelei --seeds seeds.txt --output ./avatars/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;方式五：在线编辑器&lt;/h3&gt;
+&lt;p&gt;https://editor.dicebear.com — 可视化调整每个五官、颜色、配饰，所见即所得。调整完后可以导出 SVG 或 JSON 参数文件。&lt;/p&gt;
+&lt;h3&gt;方式六：Figma 插件&lt;/h3&gt;
+&lt;p&gt;在 Figma 里直接插入 DiceBear 头像，设计师的福音。还可以用 Figma 创建自己的头像风格，导出为 JSON 定义供 DiceBear 使用。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;三、55 种风格速览&lt;/h2&gt;
+&lt;h3&gt;极简抽象类（适合技术产品/仪表盘）&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;风格&lt;/th&gt;
+&lt;th&gt;视觉效果&lt;/th&gt;
+&lt;th&gt;动画&lt;/th&gt;
+&lt;th&gt;许可&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Shapes&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;几何色块拼接，现代感&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Identicon&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;GitHub 默认头像风格&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Rings&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;同心圆环，简洁&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Glass&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;毛玻璃质感&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Blobs&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;流动斑点&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Disco&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;迪斯科舞会风&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Triangles&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;三角形拼接&lt;/td&gt;
+&lt;td&gt;❌&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Waves&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;波浪纹理&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Loops&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;循环图案&lt;/td&gt;
+&lt;td&gt;✅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;人物角色类（适合社交/社区）&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;风格&lt;/th&gt;
+&lt;th&gt;视觉效果&lt;/th&gt;
+&lt;th&gt;许可&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Lorelei&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;黑白线稿，极简优雅&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Bottts&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;机器人，科技感&lt;/td&gt;
+&lt;td&gt;免费商用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Notionists&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Notion 手绘风&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Avataaars&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;经典卡通，五官丰富&lt;/td&gt;
+&lt;td&gt;免费商用&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Pixel Art&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;像素风，复古游戏感&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Open Peeps&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;涂鸦手绘，温暖&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Thumbs&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;大拇指卡通风&lt;/td&gt;
+&lt;td&gt;CC0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Adventurer&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;D&amp;amp;D 冒险者，配饰丰富&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Fun Emoji&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;表情包风格&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Croodles&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;蜡笔涂鸦风&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Micah&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;极简插画风&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Big Smile&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;夸张笑容&lt;/td&gt;
+&lt;td&gt;CC BY 4.0&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;场景类&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;风格&lt;/th&gt;
+&lt;th&gt;视觉效果&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Constellation&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;星座连线&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Landscape&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;自然风景&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Planets&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;星球表面&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr /&gt;
+&lt;h2&gt;四、8 种进阶玩法&lt;/h2&gt;
+&lt;h3&gt;玩法 1：Gravatar 替代品&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;img src=&quot;https://api.dicebear.com/10.x/bottts/svg?seed={{username}}&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;用户注册后自动有头像，不需要上传。同一个用户永远同一个头像。&lt;/p&gt;
+&lt;h3&gt;玩法 2：同一人不同表情&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=happy01   😊
+https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=surprise  😮
+https://api.dicebear.com/10.x/lorelei/svg?seed=iYangJike&amp;amp;mouth=sad       😢
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;同一个 seed，换参数就换表情。可以做评论区的情绪头像、聊天软件的状态头像。&lt;/p&gt;
+&lt;h3&gt;玩法 3：团队/组织头像墙&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;npx dicebear bottts --seeds team.txt --format png --size 256
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;生成整整齐齐的团队头像，风格统一。适合 About 页面展示团队。&lt;/p&gt;
+&lt;h3&gt;玩法 4：动态头像（CSS 动画）&lt;/h3&gt;
+&lt;p&gt;部分风格（Shapes、Glass、Blobs、Moods、Critters、Clay 等）生成的 SVG 自带 CSS 动画。直接嵌入网页，头像会动。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!-- 这个头像会自己动 --&amp;gt;
+&amp;lt;img src=&quot;https://api.dicebear.com/10.x/shapes/svg?seed=alice&quot; /&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;玩法 5：深色/浅色模式自适应&lt;/h3&gt;
+&lt;p&gt;用 DiceBear 的 &lt;code&gt;backgroundColor&lt;/code&gt; 参数生成两个版本，配合 CSS 媒体查询：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;@media (prefers-color-scheme: dark) {
+  .avatar { content: url(&apos;/avatar-dark.svg&apos;); }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;玩法 6：Figma 自定义风格&lt;/h3&gt;
+&lt;p&gt;DiceBear 提供 Figma 插件，可以在 Figma 里设计自己的头像组件（眼睛、嘴巴、发型等），导出为 JSON 定义，然后就能用 DiceBear 的 API 生成该风格的无限变体。不需要写一行代码。&lt;/p&gt;
+&lt;h3&gt;玩法 7：Docker 私有部署&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;docker run -p 3000:3000 dicebear/api
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;数据不出服务器，完全自己掌控。适合企业内部使用或有隐私要求的场景。&lt;/p&gt;
+&lt;h3&gt;玩法 8：保存参数保证头像唯一性&lt;/h3&gt;
+&lt;p&gt;在在线编辑器中调整五官后，记录下参数组合：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &quot;style&quot;: &quot;lorelei&quot;,
+  &quot;eyes&quot;: &quot;variant20&quot;,
+  &quot;eyebrows&quot;: &quot;variant05&quot;,
+  &quot;mouth&quot;: &quot;happy01&quot;,
+  &quot;nose&quot;: &quot;variant05&quot;,
+  &quot;earrings&quot;: &quot;variant03&quot;,
+  &quot;hair&quot;: &quot;variant02&quot;,
+  &quot;head&quot;: &quot;variant03&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;以后每次用这个参数组合就能生成一模一样的头像，不需要依赖 seed 字符串。这是保持头像唯一性的最可靠方式。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;五、博客实战：用 DiceBear 做 favicon 和头像&lt;/h2&gt;
+&lt;p&gt;我的博客 (iyangjike.github.io) 使用的就是 DiceBear 的 Lorelei 风格：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Favicon&lt;/strong&gt; — 直接用 SVG 格式，矢量永不模糊。所有现代浏览器都支持 SVG favicon&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;博客头像&lt;/strong&gt; — 用 sharp (Node.js) 将 SVG 渲染为 512×512 的 WebP，保证在 Retina 屏幕上清晰&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Apple Touch Icon&lt;/strong&gt; — 180×180 WebP，iOS 添加到主屏幕时显示&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;工作流：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DiceBear 编辑器调整参数
+  → 下载 SVG（矢量，无限清晰）
+  → sharp 渲染 → 512×512 WebP（博客头像）
+  → sharp 渲染 → 180×180 WebP（apple-touch-icon）
+  → SVG 直接用作 favicon（无需转换）
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;六、相关资源&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;官网 &amp;amp; Playground：https://www.dicebear.com&lt;/li&gt;
+&lt;li&gt;GitHub：https://github.com/dicebear/dicebear&lt;/li&gt;
+&lt;li&gt;在线编辑器：https://editor.dicebear.com&lt;/li&gt;
+&lt;li&gt;HTTP API 文档：https://www.dicebear.com/how-to-use/http-api/&lt;/li&gt;
+&lt;li&gt;风格浏览：https://www.dicebear.com/styles&lt;/li&gt;
+&lt;li&gt;创建自定义风格：https://www.dicebear.com/guides/create-an-avatar-style-with-figma/&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;&lt;em&gt;参考：DiceBear 官方文档、GitHub README、个人使用经验。最后更新：2026-08-24&lt;/em&gt;&lt;/p&gt;
 </content:encoded><author>杨继珂</author></item></channel></rss>
