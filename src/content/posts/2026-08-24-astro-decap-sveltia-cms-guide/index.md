@@ -13,6 +13,7 @@ tags:
   - 博客
 series: ''
 toc: true
+coverImage: null
 ---
 
 # Astro + Decap CMS 博客搭建完全指南（含 GitHub OAuth 踩坑全记录）
@@ -38,7 +39,7 @@ toc: true
 
 ### 推荐模版
 
-> [multiterm 开源博客网站](https://multiterm.stelclementine.com/)
+> [multiterm-astro 开源博客网站](https://github.com/stelcodes/multiterm-astro)
 
 ### 2.1 初始化项目
 
@@ -246,9 +247,9 @@ Decap CMS 支持三种认证方式：
 2. 点击 "New OAuth App"
 3. 填写信息：
 
-        - Application name：`My Blog CMS`（任意名称）
-        - Homepage URL：`https://iyangjike.github.io`
-        - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+                - Application name：`My Blog CMS`（任意名称）
+                - Homepage URL：`https://iyangjike.github.io`
+                - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
 
 4. 注册后生成 Client Secret（只显示一次，务必保存）
 
