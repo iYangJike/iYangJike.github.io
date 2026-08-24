@@ -13,7 +13,6 @@ tags:
   - 博客
 series: ''
 toc: true
-coverImage: null
 ---
 
 # Astro + Decap CMS 博客搭建完全指南（含 GitHub OAuth 踩坑全记录）
