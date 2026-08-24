@@ -326,4 +326,5 @@ const user: ReadonlyUser = {
 &lt;p&gt;These features make TypeScript a powerful tool for creating robust and type-safe applications.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;echo &quot;Using keyof and mapped types in TypeScript&quot;
 &lt;/code&gt;&lt;/pre&gt;
+</content:encoded><author>杨继珂</author></item><item><title>测试新文章</title><link>https://iyangjike.github.io/posts/2026-08-24-%E6%B5%8B%E8%AF%95%E6%96%B0%E6%96%87%E7%AB%A0</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-24-%E6%B5%8B%E8%AF%95%E6%96%B0%E6%96%87%E7%AB%A0</guid><description>这是博客的第一篇文档</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;这是搭建新博客后的第一篇文章&lt;/p&gt;
 </content:encoded><author>杨继珂</author></item></channel></rss>
