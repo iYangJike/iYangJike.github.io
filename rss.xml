@@ -326,23 +326,4 @@ const user: ReadonlyUser = {
 &lt;p&gt;These features make TypeScript a powerful tool for creating robust and type-safe applications.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;echo &quot;Using keyof and mapped types in TypeScript&quot;
 &lt;/code&gt;&lt;/pre&gt;
-</content:encoded><author>杨继珂</author></item><item><title>Python&apos;s Context Managers and the with Statement</title><link>https://iyangjike.github.io/posts/pythons-context-managers-and-the-with-statement</link><guid isPermaLink="true">https://iyangjike.github.io/posts/pythons-context-managers-and-the-with-statement</guid><description>Learn how to use context managers and the with statement in Python for resource management.</description><pubDate>Tue, 15 Jul 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Context managers in Python are used to manage resources efficiently. Here&apos;s an example:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;with open(&apos;example.txt&apos;, &apos;w&apos;) as file:
-    file.write(&apos;Hello, world!&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can also create custom context managers using classes or the &lt;code&gt;contextlib&lt;/code&gt; module:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;from contextlib import contextmanager
-
-@contextmanager
-def custom_context():
-    print(&apos;Entering context&apos;)
-    yield
-    print(&apos;Exiting context&apos;)
-
-with custom_context():
-    print(&apos;Inside context&apos;)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Context managers ensure that resources are properly cleaned up, making your code more reliable and maintainable.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;python -c &quot;with open(&apos;example.txt&apos;, &apos;w&apos;) as file: file.write(&apos;Hello, world!&apos;)&quot;
-&lt;/code&gt;&lt;/pre&gt;
 </content:encoded><author>杨继珂</author></item></channel></rss>
