@@ -4,7 +4,7 @@ published: 2026-08-25
 draft: false
 description: 详细介绍 gh CLI 的安装、认证、以及仓库管理、Issue、Pull Request、GitHub Actions、Release 等核心使用场景，附带大量实战示例，帮助你快速上手。
 tags: []
-series: 博客搭建
+series: ''
 toc: true
 coverImage: null
 ---
@@ -13,7 +13,7 @@ coverImage: null
 
 GitHub CLI（`gh`）是 GitHub 官方提供的命令行工具，让你无需离开终端就能完成仓库管理、Issue 跟踪、Pull Request 工作流、CI/CD 监控等几乎所有 GitHub 操作。本文按场景分类，逐一介绍核心命令和实战用法。
 
----
+***
 
 ## 一、安装与认证
 
@@ -45,7 +45,7 @@ gh auth status
 gh --version
 ```
 
----
+***
 
 ## 二、仓库管理
 
@@ -95,7 +95,7 @@ gh repo fork deepseek-ai/deepseek-harness
 gh repo fork deepseek-ai/deepseek-harness --clone
 ```
 
----
+***
 
 ## 三、Issue 管理
 
@@ -168,7 +168,7 @@ gh issue comment 42 --body "我来处理这个问题"
 gh issue view 42 --comments
 ```
 
----
+***
 
 ## 四、Pull Request 工作流
 
@@ -275,7 +275,7 @@ gh pr view                                # 确认一下
 gh pr merge --squash --delete-branch      # 合并后清理分支
 ```
 
----
+***
 
 ## 五、GitHub Actions / CI
 
@@ -311,7 +311,7 @@ gh workflow list
 gh workflow view "deploy.yml"
 ```
 
----
+***
 
 ## 六、Release 管理
 
@@ -342,7 +342,7 @@ gh release list
 gh release download v1.0.0
 ```
 
----
+***
 
 ## 七、Gist 管理
 
@@ -363,7 +363,7 @@ gh gist edit <gist-id>
 gh gist view <gist-id>
 ```
 
----
+***
 
 ## 八、通知管理
 
@@ -378,7 +378,7 @@ gh notification mark-read
 gh notification list --web
 ```
 
----
+***
 
 ## 九、高级用法
 
@@ -429,12 +429,12 @@ gh alias set il 'issue list'
 gh alias set rl 'run list'
 ```
 
----
+***
 
 ## 快速记忆卡
 
 | 你想做什么 | 命令 |
-|-----------|------|
+| --- | --- |
 | 创建仓库 | `gh repo create` |
 | 克隆仓库 | `gh repo clone owner/repo` |
 | 创建 Issue | `gh issue create` |
@@ -447,7 +447,7 @@ gh alias set rl 'run list'
 | 查看 CI 状态 | `gh run list` |
 | 创建 Release | `gh release create v1.0.0` |
 
----
+***
 
 ## 总结
 
