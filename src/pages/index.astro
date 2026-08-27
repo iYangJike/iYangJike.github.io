@@ -7,8 +7,6 @@ import Pagination from '~/components/Pagination.astro'
 import BlockHeader from '~/components/BlockHeader.astro'
 import HomeBanner from '~/components/HomeBanner.astro'
 import siteConfig from '~/site.config'
-import TagsSection from '~/components/TagsSection.astro'
-import SeriesSection from '~/components/SeriesSection.astro'
 
 const home = await getCollection('home')
 let HomeContent
@@ -22,11 +20,6 @@ if (home.length > 0) {
   homeGithubCalendar = homeEntry.data.githubCalendar
 }
 const sortedPosts = await getSortedPosts()
-const postsHaveTags = sortedPosts.some(
-  (post) => post.data.tags && post.data.tags.length > 0,
-)
-
-const postsHaveSeries = sortedPosts.some((post) => post.data.series)
 ---
 
 <Layout>
@@ -35,22 +28,6 @@ const postsHaveSeries = sortedPosts.some((post) => post.data.series)
       <HomeBanner avatarImage={homeAvatarImage} githubCalendar={homeGithubCalendar}>
         <HomeContent />
       </HomeBanner>
-    )
-  }
-  {
-    postsHaveSeries && (
-      <section>
-        <BlockHeader>Series</BlockHeader>
-        <SeriesSection posts={sortedPosts} />
-      </section>
-    )
-  }
-  {
-    postsHaveTags && (
-      <section>
-        <BlockHeader>Tags</BlockHeader>
-        <TagsSection posts={sortedPosts} />
-      </section>
     )
   }
   {

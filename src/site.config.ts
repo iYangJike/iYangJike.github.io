@@ -37,6 +37,10 @@ const config: SiteConfig = {
       url: '/about',
     },
     {
+      name: 'Categories',
+      url: '/categories',
+    },
+    {
       name: 'Archive',
       url: '/posts',
     },

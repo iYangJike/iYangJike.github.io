@@ -1,0 +1,34 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import { getSortedPosts } from '~/utils'
+import BlockHeader from '~/components/BlockHeader.astro'
+import TagsSection from '~/components/TagsSection.astro'
+import SeriesSection from '~/components/SeriesSection.astro'
+
+const sortedPosts = await getSortedPosts()
+const postsHaveSeries = sortedPosts.some((post) => post.data.series)
+const postsHaveTags = sortedPosts.some(
+  (post) => post.data.tags && post.data.tags.length > 0,
+)
+---
+
+<Layout title="Categories" description="Browse posts by tags and series">
+  <div class="mt-2 sm:mt-0">
+    {
+      postsHaveSeries && (
+        <section>
+          <BlockHeader>Series</BlockHeader>
+          <SeriesSection posts={sortedPosts} />
+        </section>
+      )
+    }
+    {
+      postsHaveTags && (
+        <section>
+          <BlockHeader>Tags</BlockHeader>
+          <TagsSection posts={sortedPosts} />
+        </section>
+      )
+    }
+  </div>
+</Layout>
