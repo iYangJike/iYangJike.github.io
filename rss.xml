@@ -1,4 +1,389 @@
-<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>iYangJike</title><description>Web3 开发笔记 — Solidity, React, 智能合约</description><link>https://iyangjike.github.io</link><item><title>GitHub CLI（gh）完全上手指南</title><link>https://iyangjike.github.io/posts/2026-08-25-gh-cli-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-25-gh-cli-guide</guid><description>详细介绍 gh CLI 的安装、认证、以及仓库管理、Issue、Pull Request、GitHub Actions、Release 等核心使用场景，附带大量实战示例，帮助你快速上手。</description><pubDate>Tue, 25 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;GitHub CLI（gh）完全上手指南&lt;/h1&gt;
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet href="/rss.xsl" type="text/xsl"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>iYangJike</title><description>Web3 开发笔记 — Solidity, React, 智能合约</description><link>https://iyangjike.github.io</link><item><title>boss-cli：在终端里搞定 BOSS 直聘——搜索、批量投递、数据导出全攻略</title><link>https://iyangjike.github.io/posts/2026-08-26-boss-cli-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-26-boss-cli-guide</guid><description>详细介绍 boss-cli 开源工具的安装、认证、职位搜索、批量打招呼、数据导出等核心功能，以及求职场景下的最佳实践，帮助你在终端里高效完成 BOSS 直聘操作。</description><pubDate>Wed, 26 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;boss-cli：在终端里搞定 BOSS 直聘——搜索、批量投递、数据导出全攻略&lt;/h1&gt;
+&lt;p&gt;BOSS 直聘是国内最主流的求职平台之一，但它的网页端和 App 操作效率其实不算高——搜索职位要反复点筛选、翻页、一个一个打招呼。作为开发者，这种重复劳动显然应该交给命令行。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jackwener/boss-cli&quot;&gt;&lt;strong&gt;boss-cli&lt;/strong&gt;&lt;/a&gt; 就是为此而生的：一个基于逆向工程 API 的 Python CLI 工具，让你在终端里完成搜索、筛选、批量打招呼、导出数据等几乎所有求职端操作。&lt;/p&gt;
+&lt;p&gt;GitHub 地址：&lt;a href=&quot;https://github.com/jackwener/boss-cli&quot;&gt;https://github.com/jackwener/boss-cli&lt;/a&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;一、它能做什么&lt;/h2&gt;
+&lt;p&gt;boss-cli 目前覆盖了 BOSS 直聘求职者的核心操作路径：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;能力&lt;/th&gt;
+&lt;th&gt;命令&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;搜索职位&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss search&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;支持关键词 + 城市/薪资/经验/学历/行业/规模/融资阶段多维度筛选&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;查看推荐&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss recommend&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;基于求职期望的个性化推荐&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;职位详情&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss show N&lt;/code&gt; / &lt;code&gt;boss detail&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;按编号快速查看，或通过 securityId 查看完整信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;批量打招呼&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss batch-greet&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;对搜索结果批量发送打招呼消息（= 投递）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;单个打招呼&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss greet&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;对指定职位打招呼&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;已投递列表&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss applied&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看已投递的职位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;面试邀请&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss interviews&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看收到的面试邀请&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;沟通列表&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss chat&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看沟通过的 HR/Boss&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;浏览历史&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss history&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看浏览过的职位&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;数据导出&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss export&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;导出搜索结果为 CSV 或 JSON&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;个人资料&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;boss me&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;查看在线简历基本信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&lt;strong&gt;不支持的操作&lt;/strong&gt;：修改在线简历、发送自定义聊天消息（需要 MQTT/Protobuf）、发简历附件。这些还是需要回到网页端或 App 操作。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;二、安装&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;# 推荐：使用 uv（快速、隔离）
+uv tool install kabi-boss-cli
+
+# 或使用 pipx
+pipx install kabi-boss-cli
+
+# 可选：YAML 输出支持
+pip install kabi-boss-cli[yaml]
+
+# 验证安装
+boss --version
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意：PyPI 包名是 &lt;code&gt;kabi-boss-cli&lt;/code&gt;，安装后的可执行文件是 &lt;code&gt;boss&lt;/code&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h2&gt;三、认证登录&lt;/h2&gt;
+&lt;p&gt;boss-cli 支持两种登录方式：&lt;/p&gt;
+&lt;h3&gt;方式一：自动提取浏览器 Cookie（推荐）&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 自动从 Chrome 提取（前提是你已在 Chrome 登录过 BOSS 直聘）
+boss login --cookie-source chrome
+
+# 支持 10+ 浏览器：chrome / firefox / edge / brave / arc / safari 等
+boss login --cookie-source safari
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;方式二：二维码扫码登录&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;boss login --qrcode
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;终端会打印一个二维码，用 BOSS 直聘 App 扫码即可。&lt;/p&gt;
+&lt;h3&gt;验证登录状态&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;boss status --json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;输出示例：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;{
+  &quot;authenticated&quot;: true,
+  &quot;search_authenticated&quot;: true,
+  &quot;recommend_authenticated&quot;: true,
+  &quot;cookie_count&quot;: 18
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;三个核心认证全部为 &lt;code&gt;true&lt;/code&gt; 即表示登录成功。Cookie 过期后需要重新登录。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;四、核心功能详解&lt;/h2&gt;
+&lt;h3&gt;4.1 搜索职位&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 基础搜索
+boss search &quot;AI全栈&quot;
+
+# 完整筛选
+boss search &quot;AI Agent&quot; \
+  --city 北京 \
+  --salary 30-50K \
+  --exp 3-5年 \
+  --degree 本科 \
+  --industry 互联网 \
+  --scale 1000-9999人 \
+  --stage 已上市
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;支持的筛选参数&lt;/strong&gt;：&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;参数&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;th&gt;可选值&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--city&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;城市&lt;/td&gt;
+&lt;td&gt;北京/上海/广州/深圳/杭州/成都 等 42 个城市&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--salary&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;薪资范围&lt;/td&gt;
+&lt;td&gt;3K以下 / 3-5K / 5-10K / 10-15K / 15-20K / 20-30K / 30-50K / 50K以上&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--exp&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;经验要求&lt;/td&gt;
+&lt;td&gt;应届生 / 1年以下 / 1-3年 / 3-5年 / 5-10年 / 10年以上&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--degree&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;学历&lt;/td&gt;
+&lt;td&gt;大专 / 本科 / 硕士 / 博士&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--industry&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;行业&lt;/td&gt;
+&lt;td&gt;互联网 / 计算机软件 / 电子商务 等&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--scale&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;公司规模&lt;/td&gt;
+&lt;td&gt;0-20人 / 20-99人 / 100-499人 / 500-999人 / 1000-9999人 / 10000人以上&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;--stage&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;融资阶段&lt;/td&gt;
+&lt;td&gt;未融资 / 天使轮 / A轮 / B轮 / C轮 / D轮及以上 / 已上市 / 不需要融资&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre&gt;&lt;code&gt;# JSON 输出（适合脚本处理）
+boss search &quot;AI全栈&quot; --city 北京 --salary 30-50K --json
+
+# 查看所有支持的城市
+boss cities
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4.2 查看职位详情&lt;/h3&gt;
+&lt;p&gt;搜索后每个职位有一个编号，可以用 &lt;code&gt;boss show&lt;/code&gt; 快速查看：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# 先搜索
+boss search &quot;AI全栈&quot; --city 北京
+
+# 查看第 3 个结果的详情
+boss show 3
+
+# 通过 securityId 查看完整信息
+boss detail &amp;lt;securityId&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4.3 批量打招呼（核心功能）&lt;/h3&gt;
+&lt;p&gt;这是 boss-cli 最有价值的命令。在 BOSS 直聘上，&quot;打招呼&quot;就等于投递——HR 收到你的消息后如果感兴趣就会回复，进而进入聊天。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# ⚠️ 强烈建议先 dry-run 预览，再真发
+boss batch-greet &quot;AI全栈&quot; --city 北京 --salary 30-50K -n 30 --dry-run
+
+# 确认无误后真发
+boss batch-greet &quot;AI全栈&quot; --city 北京 --salary 30-50K -n 30
+
+# 多条件组合
+boss batch-greet &quot;AI Agent&quot; \
+  --city 上海 \
+  --salary 30-50K \
+  --exp 3-5年 \
+  -n 20
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;注意事项&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内置 1.5 秒延迟，防止触发风控&lt;/li&gt;
+&lt;li&gt;单次最多打招呼数量由 &lt;code&gt;-n&lt;/code&gt; 控制&lt;/li&gt;
+&lt;li&gt;打招呼内容为系统预设，不能自定义&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;一定要先 &lt;code&gt;--dry-run&lt;/code&gt;&lt;/strong&gt;，确认目标职位无误再真发&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;4.4 查看投递状态&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 已投递的职位
+boss applied
+
+# 收到的面试邀请
+boss interviews
+
+# 沟通过的 HR/Boss 列表
+boss chat
+
+# 浏览历史
+boss history
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4.5 导出数据&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 导出为 CSV
+boss export &quot;AI全栈&quot; -n 100 --format csv -o ai-jobs.csv
+
+# 导出为 JSON
+boss export &quot;AI全栈&quot; -n 100 --format json -o ai-jobs.json
+
+# 导出到标准输出（管道给其他工具）
+boss export &quot;AI全栈&quot; -n 50 --format json -o -
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;4.6 查看个人资料&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;boss me
+boss me --json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;可以查看姓名、工作年限、学历、在线简历数量等基本信息。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;五、最佳实践&lt;/h2&gt;
+&lt;h3&gt;5.1 求职场景完整流程&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 第一步：登录（Chrome Cookie 方式最快）
+boss login --cookie-source chrome
+
+# 第二步：多关键词搜索，了解市场
+boss search &quot;AI全栈&quot; --city 北京 --salary 30-50K --json | python3 -c &quot;
+import json, sys
+data = json.load(sys.stdin)
+for j in data[&apos;data&apos;][&apos;jobList&apos;]:
+    print(f&apos;{j[\&quot;jobName\&quot;]} | {j[\&quot;brandName\&quot;]} | {j[\&quot;salaryDesc\&quot;]}&apos;)
+&quot;
+
+# 第三步：导出数据，用 Excel 分析
+boss export &quot;AI全栈&quot; -n 100 --format csv -o ai-fullstack.csv
+
+# 第四步：批量投递（先 dry-run！）
+boss batch-greet &quot;AI全栈&quot; --city 北京 --salary 30-50K -n 30 --dry-run
+boss batch-greet &quot;AI全栈&quot; --city 北京 --salary 30-50K -n 30
+
+# 第五步：过几个小时查看回复
+boss chat
+boss interviews
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.2 多城市批量搜索脚本&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+# 多城市搜索脚本
+CITIES=(&quot;北京&quot; &quot;上海&quot; &quot;深圳&quot; &quot;杭州&quot; &quot;成都&quot;)
+KEYWORD=&quot;AI全栈&quot;
+
+for city in &quot;${CITIES[@]}&quot;; do
+  echo &quot;=== $city ===&quot;
+  boss search &quot;$KEYWORD&quot; --city &quot;$city&quot; --salary 30-50K --json 2&amp;gt;/dev/null \
+    | python3 -c &quot;
+import json, sys
+data = json.load(sys.stdin)
+print(f&apos;找到 {len(data[\&quot;data\&quot;][\&quot;jobList\&quot;])} 个职位&apos;)
+for j in data[&apos;data&apos;][&apos;jobList&apos;][:5]:
+    print(f&apos;  {j[\&quot;jobName\&quot;]} | {j[\&quot;brandName\&quot;]} | {j[\&quot;salaryDesc\&quot;]}&apos;)
+&quot;
+  echo
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.3 导出 + jq 数据分析&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 按薪资从高到低排（导出为 JSON 后用 jq 处理）
+boss export &quot;AI全栈&quot; -n 100 --format json -o - 2&amp;gt;/dev/null \
+  | python3 -c &quot;
+import json, sys
+jobs = json.load(sys.stdin)
+# 按薪资下限排序
+sorted_jobs = sorted(jobs, key=lambda j: int(j.get(&apos;salaryDesc&apos;,&apos;0K&apos;).split(&apos;-&apos;)[0].replace(&apos;K&apos;,&apos;&apos;)), reverse=True)
+for j in sorted_jobs[:10]:
+    print(f&apos;{j[\&quot;jobName\&quot;]:30s} | {j[\&quot;brandName\&quot;]:20s} | {j[\&quot;salaryDesc\&quot;]}&apos;)
+&quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;5.4 定时监控新职位&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;# 配合 cron 定时搜索，发现新职位后通知
+# 例如每 2 小时跑一次，把结果追加到 CSV，去重后看增量
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h2&gt;六、原理与局限&lt;/h2&gt;
+&lt;h3&gt;原理&lt;/h3&gt;
+&lt;p&gt;boss-cli 通过逆向工程 BOSS 直聘的 Web API，模拟浏览器请求来实现搜索、打招呼等操作。认证方式是从浏览器提取已有的 Cookie（或扫码获取），不存储密码。&lt;/p&gt;
+&lt;h3&gt;已知限制&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;限制&lt;/th&gt;
+&lt;th&gt;说明&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;不能改简历&lt;/td&gt;
+&lt;td&gt;在线简历的编辑需要网页端或 App 操作&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不能发自定义消息&lt;/td&gt;
+&lt;td&gt;聊天消息需要 MQTT/Protobuf 协议，CLI 暂不支持&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;不能发简历附件&lt;/td&gt;
+&lt;td&gt;需要 HR 回复后手动在 App 发&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;单账号&lt;/td&gt;
+&lt;td&gt;同一时间只能使用一组 Cookie&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;风控延迟&lt;/td&gt;
+&lt;td&gt;批量打招呼内置 1.5s 间隔，太快可能被限&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cookie 过期&lt;/td&gt;
+&lt;td&gt;一段时间后需要重新登录&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h3&gt;与其他工具的对比&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;工具&lt;/th&gt;
+&lt;th&gt;类型&lt;/th&gt;
+&lt;th&gt;面向用户&lt;/th&gt;
+&lt;th&gt;核心能力&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;boss-cli&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;CLI&lt;/td&gt;
+&lt;td&gt;求职者&lt;/td&gt;
+&lt;td&gt;搜索 + 批量打招呼 + 导出&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/Snseam/boss-zhipin-mcp&quot;&gt;boss-zhipin-mcp&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;MCP Server&lt;/td&gt;
+&lt;td&gt;招聘者 (HR)&lt;/td&gt;
+&lt;td&gt;批量搜候选人 + 简历截图 + 筛选评分&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;a href=&quot;https://github.com/derekdong-star/mcp-boss&quot;&gt;mcp-boss&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;MCP Server&lt;/td&gt;
+&lt;td&gt;求职者&lt;/td&gt;
+&lt;td&gt;搜索 + 自动打招呼，可接入 Claude Code&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;如果你想把 BOSS 直聘接入 AI 助手（如 Claude Code / Hermes），可以用 &lt;code&gt;mcp-boss&lt;/code&gt;。如果只是终端高效求职，&lt;code&gt;boss-cli&lt;/code&gt; 是最佳选择。&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2&gt;七、总结&lt;/h2&gt;
+&lt;p&gt;boss-cli 解决的核心痛点是：&lt;strong&gt;把搜索和打招呼这两个最高频、最重复的操作从手动点击变成一条命令&lt;/strong&gt;。虽然它不能替代整个求职流程（在线简历优化、HR 聊天跟进还是需要手动），但能把海投 100 个岗位的时间从 2 小时压缩到 2 分钟。&lt;/p&gt;
+&lt;p&gt;配合之前介绍的 &lt;a href=&quot;https://github.com/amruthpillai/reactive-resume&quot;&gt;JadeAI / Reactive Resume&lt;/a&gt; 等简历优化工具，先打磨好在线简历内容，再用 boss-cli 批量投递，这就是一个高效的求职工作流。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;GitHub: &lt;a href=&quot;https://github.com/jackwener/boss-cli&quot;&gt;https://github.com/jackwener/boss-cli&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><author>杨继珂</author></item><item><title>GitHub CLI（gh）完全上手指南</title><link>https://iyangjike.github.io/posts/2026-08-25-gh-cli-guide</link><guid isPermaLink="true">https://iyangjike.github.io/posts/2026-08-25-gh-cli-guide</guid><description>详细介绍 gh CLI 的安装、认证、以及仓库管理、Issue、Pull Request、GitHub Actions、Release 等核心使用场景，附带大量实战示例，帮助你快速上手。</description><pubDate>Tue, 25 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;GitHub CLI（gh）完全上手指南&lt;/h1&gt;
 &lt;p&gt;GitHub CLI（&lt;code&gt;gh&lt;/code&gt;）是 GitHub 官方提供的命令行工具，让你无需离开终端就能完成仓库管理、Issue 跟踪、Pull Request 工作流、CI/CD 监控等几乎所有 GitHub 操作。本文按场景分类，逐一介绍核心命令和实战用法。&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h2&gt;一、安装与认证&lt;/h2&gt;
