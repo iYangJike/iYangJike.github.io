@@ -4,7 +4,7 @@ published: 2026-08-26
 draft: false
 description: 详细介绍 boss-cli 开源工具的安装、认证、职位搜索、批量打招呼、数据导出等核心功能，以及求职场景下的最佳实践，帮助你在终端里高效完成 BOSS 直聘操作。
 tags: []
-series: ''
+series: 工具系列
 toc: true
 coverImage: null
 ---
