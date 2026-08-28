@@ -4,7 +4,7 @@ published: 2026-08-25
 draft: false
 description: 详细介绍 gh CLI 的安装、认证、以及仓库管理、Issue、Pull Request、GitHub Actions、Release 等核心使用场景，附带大量实战示例，帮助你快速上手。
 tags: []
-series: 工具系列
+series: 工具相关
 toc: true
 coverImage: null
 ---
