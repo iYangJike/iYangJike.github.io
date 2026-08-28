@@ -1,5 +1,5 @@
 import type { SiteConfig } from '~/types'
-import navLinksRaw from '~/data/nav.json' with { type: 'json' }
+import navLinksRaw from './data/nav.json' with { type: 'json' }
 
 const config: SiteConfig = {
   // Absolute URL to the root of your published site, used for generating links and sitemaps.
