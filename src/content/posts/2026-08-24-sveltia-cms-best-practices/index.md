@@ -9,7 +9,7 @@ tags:
   - Astro
   - 博客
   - CMS
-series: 博客搭建
+series: 博客
 toc: true
 coverImage: null
 ---
