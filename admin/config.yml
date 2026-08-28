@@ -188,4 +188,113 @@ collections:
             name: body
             widget: markdown
 
+      - label: 在线简历
+        name: resume
+        file: src/data/resume.json
+        fields:
+          - label: 基本信息
+            name: basics
+            widget: object
+            fields:
+              - label: 姓名
+                name: name
+                widget: string
+              - label: 职位
+                name: headline
+                widget: string
+              - label: 网站
+                name: website
+                widget: string
+                required: false
+              - label: 网站显示名
+                name: website_label
+                widget: string
+                required: false
+          - label: 个人总结
+            name: summary
+            widget: text
+          - label: 工作经历
+            name: experience
+            widget: list
+            fields:
+              - label: 公司
+                name: company
+                widget: string
+              - label: 职位
+                name: position
+                widget: string
+              - label: 简介
+                name: intro
+                widget: string
+                required: false
+              - label: 详情
+                name: details
+                widget: list
+                field:
+                  label: 条目
+                  name: detail
+                  widget: string
+          - label: 项目经历
+            name: projects
+            widget: list
+            fields:
+              - label: 项目名
+                name: name
+                widget: string
+              - label: 简介
+                name: intro
+                widget: string
+                required: false
+              - label: 详情
+                name: details
+                widget: list
+                field:
+                  label: 条目
+                  name: detail
+                  widget: string
+          - label: 技能
+            name: skills
+            widget: list
+            field:
+              label: 技能
+              name: skill
+              widget: string
+          - label: 教育经历
+            name: education
+            widget: list
+            fields:
+              - label: 学校
+                name: school
+                widget: string
+              - label: 学历
+                name: degree
+                widget: string
+              - label: 专业
+                name: field
+                widget: string
+
+      - label: 导航栏设置
+        name: nav
+        file: src/data/nav.json
+        fields:
+          - label: 导航项
+            name: nav_items
+            widget: list
+            fields:
+              - label: 名称
+                name: name
+                widget: string
+              - label: 链接
+                name: url
+                widget: string
+              - label: 外链
+                name: external
+                widget: boolean
+                default: false
+                required: false
+              - label: 显示
+                name: enabled
+                widget: boolean
+                default: true
+
 locale: zh_CN
