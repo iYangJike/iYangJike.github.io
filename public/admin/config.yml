@@ -188,4 +188,28 @@ collections:
             name: body
             widget: markdown
 
+      - label: 导航栏设置
+        name: nav
+        file: src/data/nav.json
+        fields:
+          - label: 导航项
+            name: nav_items
+            widget: list
+            fields:
+              - label: 名称
+                name: name
+                widget: string
+              - label: 链接
+                name: url
+                widget: string
+              - label: 外链
+                name: external
+                widget: boolean
+                default: false
+                required: false
+              - label: 显示
+                name: enabled
+                widget: boolean
+                default: true
+
 locale: zh_CN

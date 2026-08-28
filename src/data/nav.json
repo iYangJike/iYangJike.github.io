@@ -1,0 +1,10 @@
+{
+  "nav_items": [
+    { "name": "Home", "url": "/", "enabled": true },
+    { "name": "About", "url": "/about", "enabled": true },
+    { "name": "Categories", "url": "/categories", "enabled": true },
+    { "name": "Resume", "url": "/resume", "enabled": true },
+    { "name": "Archive", "url": "/posts", "enabled": true },
+    { "name": "GitHub", "url": "https://github.com/iYangJike", "external": true, "enabled": true }
+  ]
+}

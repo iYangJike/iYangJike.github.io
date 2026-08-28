@@ -1,4 +1,5 @@
 import type { SiteConfig } from '~/types'
+import navLinksRaw from '~/data/nav.json' with { type: 'json' }
 
 const config: SiteConfig = {
   // Absolute URL to the root of your published site, used for generating links and sitemaps.
@@ -27,33 +28,11 @@ const config: SiteConfig = {
   // It is not recommended to change this, since most links existing in the site currently do not have trailing slashes.
   trailingSlashes: false,
   // The navigation links to display in the header.
-  navLinks: [
-    {
-      name: 'Home',
-      url: '/',
-    },
-    {
-      name: 'About',
-      url: '/about',
-    },
-    {
-      name: 'Categories',
-      url: '/categories',
-    },
-    {
-      name: 'Resume',
-      url: '/resume',
-    },
-    {
-      name: 'Archive',
-      url: '/posts',
-    },
-    {
-      name: 'GitHub',
-      url: 'https://github.com/iYangJike',
-      external: true,
-    },
-  ],
+  navLinks: navLinksRaw.nav_items.filter((link: any) => link.enabled !== false).map((link: any) => ({
+    name: link.name,
+    url: link.url,
+    external: link.external || undefined,
+  })),
   // The theming configuration for the site.
   themes: {
     // The theming mode. One of "single" | "select" | "light-dark-auto".
