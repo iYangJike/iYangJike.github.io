@@ -4,7 +4,7 @@ backend:
   branch: main
   base_url: https://decap-oauth-vercel-seven.vercel.app
   client_id: Ov23liX8k2rOOZ7wHTnx
-  skip_ci: false
+  skip_ci: true
 
 # 自定义品牌
 logo:
