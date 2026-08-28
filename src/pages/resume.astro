@@ -1,137 +1,108 @@
 ---
 import Layout from '~/layouts/Layout.astro'
+import resume from '~/data/resume.json' with { type: 'json' }
+
+const { basics, summary, experience, projects, skills, education } = resume
 ---
 
-<Layout title="Resume" description="Jike - AI 全栈开发工程师">
+<Layout title="Resume" description={`${basics.name} - ${basics.headline}`}>
   <div class="resume max-w-3xl mx-auto">
     
     <!-- Header -->
     <header class="mt-8 mb-8">
-      <h1 class="text-3xl font-bold">Jike</h1>
-      <p class="text-lg text-foreground/70 mt-1">AI 全栈开发工程师 / 前端工程师</p>
-      <p class="text-sm text-foreground/60 mt-1">
-        <a href="https://iyangjike.github.io" class="hover:text-accent">iyangjike.github.io</a>
-      </p>
+      <h1 class="text-3xl font-bold">{basics.name}</h1>
+      <p class="text-lg text-foreground/70 mt-1">{basics.headline}</p>
+      {
+        basics.website && (
+          <p class="text-sm text-foreground/60 mt-1">
+            <a href={basics.website} class="hover:text-accent">{basics.website_label || basics.website}</a>
+          </p>
+        )
+      }
     </header>
 
     <!-- Summary -->
-    <section class="mb-6">
-      <p class="text-foreground/80 leading-relaxed">
-        5 年前端开发经验，近一年聚焦 AI 互动内容产品。能独立闭环 SSE / WebRTC / JSB 等 AI 交互协议，整条链路可在客户端闭环并与后端 proto 对齐。熟练使用 Cursor、Claude Code、Codex、Hermes 等多运行时 Agent 工具，将高频开发流程封装为 Skill，把 Agent 当作可复用的工程系统。
-      </p>
-    </section>
+    {
+      summary && (
+        <section class="mb-6">
+          <p class="text-foreground/80 leading-relaxed">{summary}</p>
+        </section>
+      )
+    }
 
     <!-- Experience -->
-    <section class="mb-6">
-      <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">工作经历</h2>
-      
-      <div class="mb-4">
-        <div class="flex justify-between items-baseline">
-          <h3 class="font-semibold">Vivix</h3>
-        </div>
-        <p class="text-sm text-foreground/60">前端工程师 / AI 应用前端</p>
-        <p class="text-sm text-foreground/60 mb-1">实时交互多模态 AI 公司，消费级产品为 Fizzz / Sway。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>负责 Fizzz 交互式 AI 视频角色 C 端：接入腾讯云 TRTC / CVI，实现数字人实时通话；支持半双工 SSE 与全双工音视频切换，含 AI 降噪、远端说话态和会话心跳。</li>
-          <li>自研端侧语音链路：Deepgram 实时 ASR + MicVAD + 咳嗽/噪声分类，降低误触发；静音超时自动追问。</li>
-          <li>落地 Sway 流式角色扮演：SSE 打字机以首 token 上屏为准；支持模型包切换、灵感回复，以及 TA2V 边生成边播的 HLS 播放。</li>
-          <li>设计 App 内 H5 售卖架构：iOS / Android JSB 双通道、Redux 购买状态机；价格只信 Store queryProducts，结算以 purchase_result 和账户刷新为准。</li>
-          <li>搭建 AIGC 创作者工作台：可靠 WebSocket 多轮生成形象/音色/人设/开场；角色卡 JSON Schema 校验与多格式导入。</li>
-          <li>建设前端工程：pnpm + Turborepo monorepo，Next 静态导出 + Vite 多入口；11 语 + 阿拉伯语 RTL；GTM / AppsFlyer 事件契约。</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="font-semibold">百度国际深圳研发中心</h3>
-        <p class="text-sm text-foreground/60">前端设计开发工程师</p>
-        <p class="text-sm text-foreground/60 mb-1">负责 PaddleHelix 螺旋桨生物计算平台及管理后台的前端开发、运维与发布。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>基于 React + Zustand + Antd + Tailwind，完成蛋白质结构可视化、分子相互作用分析等模块。</li>
-          <li>熟练使用 Copilot、Claude Code、Cursor 等 AI 编程工具辅助开发，提升开发效率。</li>
-          <li>使用 Docusaurus + Read the Docs 构建项目文档站点，支持国际化访问。</li>
-        </ul>
-      </div>
-
-      <div class="mb-4">
-        <h3 class="font-semibold">吉利汽车研发中心</h3>
-        <p class="text-sm text-foreground/60">前端开发工程师</p>
-        <p class="text-sm text-foreground/60 mb-1">参与 SQEMS 流程工单系统和 GQMP 保单系统前端开发。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>基于 Vue2 + Element UI，封装通用表单组件、权限指令，实现数据驱动视图与动态表单校验。</li>
-          <li>使用 ECharts 实现大屏看板，封装可复用图表组件，适配多客户定制化需求。</li>
-          <li>调研并集成 dhtmlx-gantt 甘特图方案，使用 vue-grid-layout 实现可记忆布局。</li>
-          <li>GQMP 保单系统（React + Antd）：实现 HTML5 转 PDF、月报图表可视化、可拖拽表格。</li>
-        </ul>
-      </div>
-    </section>
+    {
+      experience.length > 0 && (
+        <section class="mb-6">
+          <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">工作经历</h2>
+          {experience.map((exp) => (
+            <div class="mb-4">
+              <div class="flex justify-between items-baseline">
+                <h3 class="font-semibold">{exp.company}</h3>
+              </div>
+              <p class="text-sm text-foreground/60">{exp.position}</p>
+              {exp.intro && <p class="text-sm text-foreground/60 mb-1">{exp.intro}</p>}
+              {
+                exp.details.length > 0 && (
+                  <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
+                    {exp.details.map((d) => <li>{d}</li>)}
+                  </ul>
+                )
+              }
+            </div>
+          ))}
+        </section>
+      )
+    }
 
     <!-- Projects -->
-    <section class="mb-6">
-      <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">项目经历</h2>
-
-      <div class="mb-3">
-        <h3 class="font-semibold">Fizzz · 交互式 AI 视频角色</h3>
-        <p class="text-sm text-foreground/70 mb-1">面向 C 端的交互式 AI 数字人平台，支持实时音视频对话、角色创建与探索。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>接入腾讯云 TRTC / CVI，实现数字人实时通话，支持半双工 SSE 与全双工 WebRTC 切换</li>
-          <li>自研 Deepgram 实时 ASR + MicVAD + 咳嗽/噪声分类，降低误触发</li>
-          <li>搭建 WebSocket 多轮捏人工作台：生成形象/音色/人设/开场，支持会话恢复与 Remix</li>
-        </ul>
-      </div>
-
-      <div class="mb-3">
-        <h3 class="font-semibold">Sway · AI 角色扮演</h3>
-        <p class="text-sm text-foreground/70 mb-1">AI 角色扮演产品，C 端覆盖发现、流式聊天、角色创作、订阅付费，支持 11 语 + 阿拉伯语 RTL。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>Next.js 静态导出 + SSE 流式对话，打字机以首 token 上屏为准</li>
-          <li>设计 App 内 H5 售卖架构：JSB 双通道 + Redux 购买状态机，对接 iOS/Android IAP</li>
-          <li>支持模型包切换、灵感回复、TA2V 边生成边播的 HLS 播放</li>
-        </ul>
-      </div>
-
-      <div class="mb-3">
-        <h3 class="font-semibold">PaddleHelix 螺旋桨生物计算平台</h3>
-        <p class="text-sm text-foreground/70 mb-1">基于 PaddleHelix 的生命科学数据分析平台，面向生物信息学及 AI 药物研发场景。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>React + Zustand + Antd + Tailwind，完成蛋白质结构可视化、分子相互作用分析</li>
-          <li>熟练使用 Copilot、Claude Code、Cursor 等 AI 编程工具辅助开发</li>
-        </ul>
-      </div>
-
-      <div class="mb-3">
-        <h3 class="font-semibold">SQEMS 流程工单系统</h3>
-        <p class="text-sm text-foreground/70 mb-1">基于 Vue2 + Element UI 的流程工单系统，涵盖变更、问题、审核、实验室等 10+ 业务模块。</p>
-        <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
-          <li>封装通用表单组件，数据驱动视图 + 动态表单校验</li>
-          <li>封装权限指令、简易状态机，处理复杂流程节点</li>
-          <li>ECharts 大屏看板 + dhtmlx-gantt 甘特图 + vue-grid-layout 可记忆布局</li>
-        </ul>
-      </div>
-    </section>
+    {
+      projects.length > 0 && (
+        <section class="mb-6">
+          <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">项目经历</h2>
+          {projects.map((proj) => (
+            <div class="mb-3">
+              <h3 class="font-semibold">{proj.name}</h3>
+              {proj.intro && <p class="text-sm text-foreground/70 mb-1">{proj.intro}</p>}
+              {
+                proj.details.length > 0 && (
+                  <ul class="list-disc list-inside text-sm text-foreground/70 space-y-0.5">
+                    {proj.details.map((d) => <li>{d}</li>)}
+                  </ul>
+                )
+              }
+            </div>
+          ))}
+        </section>
+      )
+    }
 
     <!-- Skills -->
-    <section class="mb-6">
-      <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">技能</h2>
-      <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground/70">
-        <span>React 19 / TypeScript / Next.js / Vue 2&3 / Vite</span>
-        <span>Tailwind CSS / Antd / Element UI / Radix UI</span>
-        <span>TRTC / WebRTC / SSE / WebSocket / HLS.js / Deepgram ASR</span>
-        <span>Redux Toolkit / Zustand / SWR / Hybrid H5 JSB</span>
-        <span>Stripe Checkout / IAP / GTM / AppsFlyer / i18n</span>
-        <span>pnpm + Turborepo / Next 静态导出 / Vite 多入口</span>
-        <span>Agent Skill / AGENTS.md / Claude Code / Codex / Hermes</span>
-        <span>Protobuf 契约 / gRPC 流式 / Stripe / IAP</span>
-      </div>
-    </section>
+    {
+      skills.length > 0 && (
+        <section class="mb-6">
+          <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">技能</h2>
+          <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-foreground/70">
+            {skills.map((s) => <span>{s}</span>)}
+          </div>
+        </section>
+      )
+    }
 
     <!-- Education -->
-    <section class="mb-6">
-      <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">教育经历</h2>
-      <div class="mb-2">
-        <h3 class="font-semibold text-sm">河南科技大学</h3>
-        <p class="text-sm text-foreground/60">本科 · 计算机科学与技术</p>
-      </div>
-    </section>
+    {
+      education.length > 0 && (
+        <section class="mb-6">
+          <h2 class="text-lg font-semibold border-b border-accent/20 pb-1 mb-3">教育经历</h2>
+          {education.map((edu) => (
+            <div class="mb-2">
+              <h3 class="font-semibold text-sm">{edu.school}</h3>
+              <p class="text-sm text-foreground/60">{edu.degree} · {edu.field}</p>
+            </div>
+          ))}
+        </section>
+      )
+    }
 
   </div>
 </Layout>
