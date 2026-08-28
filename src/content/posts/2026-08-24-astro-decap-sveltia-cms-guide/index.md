@@ -11,7 +11,7 @@ tags:
   - Vercel
   - OAuth
   - 博客
-series: 博客搭建
+series: 博客
 toc: true
 coverImage: null
 ---
@@ -247,9 +247,9 @@ Decap CMS 支持三种认证方式：
 2. 点击 "New OAuth App"
 3. 填写信息：
 
-                                - Application name：`My Blog CMS`（任意名称）
-                                - Homepage URL：`https://iyangjike.github.io`
-                                - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
+                                                                - Application name：`My Blog CMS`（任意名称）
+                                                                - Homepage URL：`https://iyangjike.github.io`
+                                                                - Authorization callback URL：`https://decap-oauth-vercel-seven.vercel.app/callback`
 
 4. 注册后生成 Client Secret（只显示一次，务必保存）
 
