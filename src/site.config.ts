@@ -150,14 +150,6 @@ const config: SiteConfig = {
   // If you don't want to use Giscus, set this to undefined.
   giscus: undefined,
   // These are characters available for the character chat feature.
-  // To add your own character, add an image file to the top-level `/public` directory
-  // Make sure to compress the image to a web-friendly size (<100kb)
-  // Try using the excellent https://squoosh.app web app for creating small webp files
-  characters: {
-    owl: '/owl.webp',
-    unicorn: '/unicorn.webp',
-    duck: '/duck.webp',
-  },
 }
 
 export default config

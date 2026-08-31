@@ -178,5 +178,4 @@ export interface SiteConfig {
   socialLinks: SocialLinks
   navLinks: NavLink[]
   giscus: GiscusConfig | undefined,
-  characters: Record<string, string>
 }

@@ -380,42 +380,6 @@ article img {
   aside {
     @apply bg-foreground/7;
 
-    &.character-dialogue {
-      @apply sm:bg-transparent flex items-center sm:items-start justify-center sm:justify-start gap-3 py-4 px-2 md:px-5;
-
-      &:has(+ aside.character-dialogue) {
-        @apply mb-4 sm:mb-0 sm:pb-0;
-      }
-
-      & + aside.character-dialogue:nth-of-type(even):not(.align-left),
-      &.align-right {
-        @apply flex-row-reverse;
-
-        .character-dialogue-content:after {
-          @apply -right-3 -rotate-90;
-          left: initial;
-        }
-      }
-
-      & + aside.character-dialogue {
-        @apply mt-4 sm:mt-3 sm:pt-0;
-      }
-
-      img.character-dialogue-image {
-        @apply m-0 border-none shrink-1 w-20 sm:w-25;
-      }
-
-      .character-dialogue-content {
-        @apply relative shrink-5 sm:bg-foreground/6 px-1 mx-1.5 sm:px-6 sm:mt-0.5 rounded-xl sm:py-6 max-w-full sm:min-w-1/8;
-
-        /* Add pointy part of speech bubble to the bottom left corner */
-        &:after {
-          @apply hidden sm:block absolute top-8 -left-3 rotate-90 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-foreground/6;
-          content: '';
-        }
-      }
-    }
-
     p.admonition-title {
       @apply mb-2 inline-block font-semibold relative ml-6.5 md:ml-8.5;
 
