@@ -4,7 +4,7 @@ published: 2026-08-28
 draft: false
 description: 用甬哥 Sing-box 一键脚本搭出 HY2/TUIC 后，借助 GitLab 生成真正的 https 订阅链接，方便客户端订阅更新。
 tags: []
-series: 工具系列
+series: 工具相关
 toc: true
 coverImage: null
 ---

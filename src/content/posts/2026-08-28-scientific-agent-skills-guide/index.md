@@ -4,7 +4,7 @@ published: 2026-08-28
 draft: false
 description: 详细介绍 K-Dense AI 开源的 Scientific Agent Skills 仓库——163 个即用型科学技能，覆盖生物信息学、药物发现、医学影像、地理空间等 18 个领域，让你的 Cursor/Claude Code 秒变 AI Scientist。
 tags: []
-series: 工具系列
+series: 工具相关
 toc: true
 coverImage: null
 ---

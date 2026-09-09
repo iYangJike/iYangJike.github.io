@@ -4,7 +4,7 @@ published: 2026-08-28
 draft: false
 description: GCP Always Free 免费条件、注册、创建 VM、防火墙配置、SSH 登录、搭 Hysteria 2 以及 90 天试用结束后的注意事项。
 tags: []
-series: 工具系列
+series: 工具相关
 toc: true
 coverImage: null
 ---
