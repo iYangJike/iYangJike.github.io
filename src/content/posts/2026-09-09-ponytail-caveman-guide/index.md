@@ -221,7 +221,70 @@ Ponytail 有硬性安全规则：**输入验证、错误处理、安全措施、
 
 ---
 
-## 八、常见坑
+## 八、能否根据 Token 额度自动开关？
+
+### 手动关闭：完全支持
+
+两个工具都支持随时手动关闭，无需重启 session，下一条回复立即恢复：
+
+```bash
+/ponytail off       # 或说 "stop ponytail" / "normal mode"
+/caveman off        # 或说 "stop caveman" / "normal mode"
+```
+
+### 自动根据 Token 额度开关：不支持
+
+两者本质上是 **prompt-engineering 工具**——通过注入系统规则改变 Agent 行为。它们运行在 LLM 的对话上下文层面，不具备运行时的 token 计数或 API 额度查询能力。
+
+换句话说：Caveman 不知道你的账户还剩多少额度，Ponytail 也不知道这个月花了多少钱。它们只是改变了 Agent 的"说话方式"和"写代码风格"。
+
+### 变通方案
+
+**方案一：配合 Worktrunk statusline 监控（Claude Code）**
+
+Worktrunk 的 statusline 可以实时显示 Claude Code 的上下文窗口使用率（🌔 65%）和速率限制预测（如 `2.9×(Tue–Tue 5pm)`）。接近上限时手动切换到更激进的模式：
+
+```bash
+/caveman ultra       # 额度紧张时临时切 ultra
+```
+
+**方案二：Caveman shrink MCP 中间件**
+
+Caveman 有一个独立组件 `caveman-shrink`，部署为 MCP server 后可以在 tool 调用层面自动压缩，不依赖对话中的 `/caveman` 命令。适合作为基础设施一直运行，无需手动切换。
+
+安装方式（安装 Caveman 时加 `--with-mcp-shrink` 参数）。
+
+**方案三：实际使用策略**
+
+| 工具 | 推荐策略 | 原因 |
+|------|------|------|
+| **Ponytail** | **常开 full，不要关** | 省的是代码行数。关了 Agent 会过度工程化，产出的代码更多，长期看反而更费 token。它是一个正向循环——越用越省 |
+| **Caveman** | **根据情况手动切换** | 日常 full，额度紧张时切 ultra，Code Review / 写文档时 off。它是临时调节——需要时压缩，不需要时放开 |
+
+**关键认知：Ponytail 不应该因为额度紧张就关。** 关掉 Ponytail 意味着 Agent 会写更多代码、引入更多依赖、创建更多文件——这些都会在后续对话中反复消耗 token。Ponytail 省的是"长期结构性成本"，Caveman 省的是"短期对话成本"。
+
+### 实际切换流程
+
+```
+额度充足时：
+  /ponytail full   → Agent 写最少代码
+  /caveman full    → Agent 说最少话
+
+额度紧张时（收到 Claude Code 的 rate limit 警告）：
+  /caveman ultra   → 进一步压缩输出（不改 Ponytail！）
+
+额度恢复后：
+  /caveman full    → 恢复正常压缩级别
+
+需要详细解释时：
+  /caveman off     → 问完再切回来
+```
+
+**注意：永远不要因为额度紧张关掉 Ponytail。** 它是你的结构性省钱工具，关了反而更贵。
+
+---
+
+## 九、常见坑
 
 **坑 1：Caveman ultra + Ponytail ultra 时，Agent 回复太简，看不懂做了什么**
 
@@ -245,7 +308,7 @@ Ponytail 有硬性安全规则：**输入验证、错误处理、安全措施、
 
 ---
 
-## 九、安装与验证
+## 十、安装与验证
 
 ```bash
 # 装 Caveman（自动检测所有已安装的 Agent）
@@ -263,7 +326,7 @@ claude plugins install DietrichGebert/ponytail
 
 ---
 
-## 十、总结
+## 十一、总结
 
 ```
 Ponytail full + Caveman full = 日常最优解
