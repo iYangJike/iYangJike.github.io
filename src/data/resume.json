@@ -5,7 +5,7 @@
     "website": "https://iyangjike.github.io",
     "website_label": "iyangjike.github.io"
   },
-  "summary": "5 年前端开发经验，近一年聚焦 AI 互动内容产品。能独立闭环 SSE / WebRTC / JSB 等 AI 交互协议，整条链路可在客户端闭环并与后端 proto 对齐。熟练使用 Cursor、Claude Code、Codex、Hermes 等多运行时 Agent 工具，将高频开发流程封装为 Skill，把 Agent 当作可复用的工程系统。",
+  "summary": "多年开发经验，近一年聚焦 AI 互动内容产品。能独立闭环 SSE / WebRTC / JSB 等 AI 交互协议，整条链路可在客户端闭环并与后端 proto 对齐。熟练使用 Cursor、Claude Code、Codex、Hermes 等多运行时 Agent 工具，将高频开发流程封装为 Skill，把 Agent 当作可复用的工程系统。",
   "experience": [
     {
       "company": "Vivix",
