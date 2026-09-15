@@ -139,7 +139,7 @@ const config: SiteConfig = {
   // Social links to display in the footer.
   socialLinks: {
     github: 'https://github.com/iYangJike',
-    twitter: 'https://x.com/iYangJike',
+    twitter: 'https://x.com/iike_1155665',
     rss: true, // Set to true to include an RSS feed link in the footer
   },
   // Configuration for Giscus comments.
