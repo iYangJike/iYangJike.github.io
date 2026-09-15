@@ -6,6 +6,8 @@ import LightDarkAutoThemeLoader from '~/components/LightDarkAutoThemeLoader.astr
 import SelectThemeLoader from '~/components/SelectThemeLoader.astro'
 import siteConfig from '~/site.config'
 import { pick, resolveThemeColorStyles } from '~/utils'
+import type { FooterConfig } from '~/types'
+import footerData from '~/data/footer.json'
 import crypto from 'crypto'
 
 interface Props {
@@ -16,6 +18,9 @@ interface Props {
 }
 
 const { title, description, tags, author } = Astro.props
+
+// 页脚配置来自 src/data/footer.json，可在后台「设置 → 页脚设置」中管理
+const footerConfig: FooterConfig = footerData
 const pageUrl = new URL(Astro.url.pathname, Astro.site).href.replace(/\/$/, '') // Remove trailing slash for consistency
 const pageType = Astro.url.pathname.startsWith('/posts') ? 'article' : 'website'
 const pageTitle = title ? `${title} - ${siteConfig.title}` : siteConfig.title
@@ -163,7 +168,7 @@ let generatedCss: string = cssLines.join('\n')
       <main class="flex flex-col py-1">
         <slot />
       </main>
-      <Footer />
+      <Footer footer={footerConfig} />
     </div>
   </body>
 </html>

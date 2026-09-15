@@ -8,16 +8,16 @@ import BlockHeader from '~/components/BlockHeader.astro'
 import HomeBanner from '~/components/HomeBanner.astro'
 import siteConfig from '~/site.config'
 
-const home = await getCollection('home')
+const settings = await getCollection('settings')
 let HomeContent
 let homeAvatarImage
 let homeGithubCalendar
-if (home.length > 0) {
-  const homeEntry = home[0]
-  const { Content } = await render(homeEntry)
+if (settings.length > 0) {
+  const settingsEntry = settings[0]
+  const { Content } = await render(settingsEntry)
   HomeContent = Content
-  homeAvatarImage = homeEntry.data.avatarImage
-  homeGithubCalendar = homeEntry.data.githubCalendar
+  homeAvatarImage = settingsEntry.data.avatarImage
+  homeGithubCalendar = settingsEntry.data.githubCalendar
 }
 const sortedPosts = await getSortedPosts()
 ---

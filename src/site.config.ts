@@ -136,12 +136,8 @@ const config: SiteConfig = {
       // },
     },
   },
-  // Social links to display in the footer.
-  socialLinks: {
-    github: 'https://github.com/iYangJike',
-    twitter: 'https://x.com/iike_1155665',
-    rss: true, // Set to true to include an RSS feed link in the footer
-  },
+  // 页脚社交链接已迁移到 src/content/settings.md 的 footer 字段，
+  // 可在后台「设置」标签页中管理。
   // Configuration for Giscus comments.
   // To set up Giscus, follow the instructions at https://giscus.app/
   // You'll need a GitHub repository with discussions enabled and the Giscus app installed.

@@ -131,11 +131,11 @@ collections:
         widget: markdown
 
   - name: pages
-    label: 页面
+    label: 设置
     files:
       - label: 首页
-        name: home
-        file: src/content/home.md
+        name: settings
+        file: src/content/settings.md
         fields:
           - label: 头像
             name: avatarImage
@@ -152,11 +152,11 @@ collections:
           - label: GitHub 用户名
             name: githubCalendar
             widget: string
+            hint: 用于首页贡献图，填 GitHub 用户名（如 iYangJike）
             required: false
           - label: 正文
             name: body
             widget: markdown
-
       - label: 文章附言
         name: addendum
         file: src/content/addendum.md
@@ -296,5 +296,57 @@ collections:
                 name: enabled
                 widget: boolean
                 default: true
+
+      - label: 页脚设置
+        name: footer
+        file: src/data/footer.json
+        fields:
+          - label: 显示页脚
+            name: enabled
+            widget: boolean
+            default: true
+            hint: 关闭后整块页脚都不显示
+          - label: 社交链接
+            name: socialLinks
+            widget: list
+            required: false
+            summary: '{{fields.name}} → {{fields.url}}'
+            hint: 支持拖拽排序，可单独控制每一项的显示
+            fields:
+              - label: 名称
+                name: name
+                widget: string
+                hint: 无障碍读屏用，如 GitHub
+              - label: 链接
+                name: url
+                widget: string
+                hint: 完整网址；站内路径写 /rss.xml 这种形式
+              - label: 图标
+                name: icon
+                widget: select
+                required: false
+                options:
+                  - github
+                  - x
+                  - rss
+                  - email
+                  - linkedin
+                  - bluesky
+                  - mastodon
+              - label: 显示
+                name: enabled
+                widget: boolean
+                default: true
+                required: false
+          - label: 显示版权
+            name: showCopyright
+            widget: boolean
+            default: false
+            required: false
+          - label: 版权文字
+            name: copyrightText
+            widget: string
+            required: false
+            hint: 如 杨继珂 © 2025
 
 locale: zh_CN

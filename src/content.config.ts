@@ -24,8 +24,8 @@ const postsCollection = defineCollection({
     }),
 })
 
-const homeCollection = defineCollection({
-  loader: glob({ pattern: ['home.md', 'home.mdx'], base: './src/content' }),
+const settingsCollection = defineCollection({
+  loader: glob({ pattern: ['settings.md', 'settings.mdx'], base: './src/content' }),
   schema: ({ image }) =>
     z.object({
       avatarImage: z
@@ -53,6 +53,6 @@ const addendumCollection = defineCollection({
 
 export const collections = {
   posts: postsCollection,
-  home: homeCollection,
+  settings: settingsCollection,
   addendum: addendumCollection,
 }

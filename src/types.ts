@@ -156,6 +156,20 @@ export type SocialLinks = {
   rss?: boolean
 }
 
+export type FooterSocialLink = {
+  name: string
+  url: string
+  icon?: string
+  enabled?: boolean
+}
+
+export type FooterConfig = {
+  enabled?: boolean
+  showCopyright?: boolean
+  copyrightText?: string
+  socialLinks?: Array<FooterSocialLink>
+}
+
 export type GiscusConfig = {
   repo: string
   repoId: string
@@ -175,7 +189,6 @@ export interface SiteConfig {
   pageSize: number
   trailingSlashes: boolean
   themes: ThemesConfig
-  socialLinks: SocialLinks
   navLinks: NavLink[]
   giscus: GiscusConfig | undefined,
 }

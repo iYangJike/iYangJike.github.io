@@ -1,5 +1,5 @@
 ---
-import type { SocialLinks } from '~/types'
+import type { FooterSocialLink } from '~/types'
 import IconGithub from '~/icons/github.svg'
 import IconMastodon from '~/icons/mastodon.svg'
 import IconX from '~/icons/x.svg'
@@ -9,97 +9,60 @@ import IconEmail from '~/icons/email.svg'
 import IconRss from '~/icons/rss.svg'
 
 interface Props {
-  socialLinks: SocialLinks
+  links: Array<FooterSocialLink>
 }
 
-const { socialLinks } = Astro.props
+const { links } = Astro.props
+
+// 图标名 → 组件映射。后台在「设置 → 页脚 → 社交链接 → 图标」里选择。
+const iconMap = {
+  github: IconGithub,
+  x: IconX,
+  twitter: IconX,
+  rss: IconRss,
+  email: IconEmail,
+  linkedin: IconLinkedin,
+  bluesky: IconBluesky,
+  mastodon: IconMastodon,
+} as const
+
+type IconName = keyof typeof iconMap
+
+function resolveIcon(icon?: string) {
+  if (!icon) return null
+  const key = icon.toLowerCase() as IconName
+  return iconMap[key] ?? null
+}
+
+// 邮箱类链接自动补 mailto:
+function resolveHref(url: string, icon?: string) {
+  if (icon?.toLowerCase() === 'email' && !url.startsWith('mailto:')) {
+    return `mailto:${url}`
+  }
+  return url
+}
+
+const isExternal = (url: string) => /^https?:\/\//i.test(url)
+
+const resolved = links
+  .map((link) => ({ ...link, Icon: resolveIcon(link.icon), href: resolveHref(link.url, link.icon) }))
+  .filter((link) => link.Icon !== null)
 ---
 
-<div class="flex w-full max-w-md items-center justify-between">
-  {
-    socialLinks.github && (
-      <a
-        href={socialLinks.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">GitHub</span>
-        <IconGithub class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.mastodon && (
-      <a
-        href={socialLinks.mastodon}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">Mastodon</span>
-        <IconMastodon class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.twitter && (
-      <a
-        href={socialLinks.twitter}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">X</span>
-        <IconX class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.linkedin && (
-      <a
-        href={socialLinks.linkedin}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">LinkedIn</span>
-        <IconLinkedin class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.bluesky && (
-      <a
-        href={socialLinks.bluesky}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">Bluesky</span>
-        <IconBluesky class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.email && (
-      <a
-        href={`mailto:${socialLinks.email}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="social-link"
-      >
-        <span class="sr-only">Email</span>
-        <IconEmail class="size-7" />
-      </a>
-    )
-  }
-  {
-    socialLinks.rss && (
-      <a href="/rss.xml" class="social-link">
-        <span class="sr-only">RSS</span>
-        <IconRss class="size-7" />
-      </a>
-    )
-  }
-</div>
+{
+  resolved.length > 0 && (
+    <div class="flex w-full max-w-md items-center justify-between">
+      {resolved.map(({ name, href, Icon }) => (
+        <a
+          href={href}
+          target={isExternal(href) ? '_blank' : undefined}
+          rel={isExternal(href) ? 'noopener noreferrer' : undefined}
+          class="social-link"
+        >
+          <span class="sr-only">{name}</span>
+          {Icon && <Icon class="size-7" />}
+        </a>
+      ))}
+    </div>
+  )
+}
