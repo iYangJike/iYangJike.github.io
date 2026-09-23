@@ -210,7 +210,7 @@ with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 写爬虫、做训练语料管线、给内部工具加下载能力，都是这套 API。
 
 30. 插件机制：支持自定义插件扩展提取器和后处理器（官方 README 的 PLUGINS 章节有开发模板）；也能用 `--extractor-args` 给特定站点传专属参数
-31. GUI 生态：不想用命令行的，可以选 Stacher（桌面）、Open Video Downloader（桌面）、Seal（安卓）。注意：很多商业下载器和 App 的底层其实就是 yt-dlp——你要的功能，命令行都能免费做到
+31. GUI 生态：不想用命令行的，可以选 Stacher（桌面）、Open Video Downloader（桌面）、Seal（安卓，详见第七节）。给 AI 助手装 yt-dlp-downloader-skill（第七节）后，一句话也能下载。注意：很多商业下载器和 App 的底层其实就是 yt-dlp——你要的功能，命令行都能免费做到
 
 ---
 
@@ -285,7 +285,63 @@ yt-dlp "https://www.douyin.com/video/7xxxxxxxxxxxxxxxxx"    # 视频页链接
 
 ---
 
-## 七、速查：常用命令与场景选型
+## 七、生态工具：Seal（安卓 App）与 AI Agent 技能
+
+命令行的部分讲完了，再补两个「不写命令也能用上 yt-dlp」的生态工具：手机上装 Seal，AI 助手上装 yt-dlp-downloader-skill。
+
+### Seal：安卓上的 yt-dlp 图形界面
+
+https://github.com/JunkFood02/Seal
+
+Seal 是开源的安卓音视频下载器，本质就是 yt-dlp 的图形界面——底层基于 youtubedl-android，在 App 内直接内置了 yt-dlp，近 3 万 star（GPL-3.0）：
+
+- 粘贴链接即可下载，支持 yt-dlp 的全部站点，全程按钮操作
+- 一键下载整个播放列表
+- 提取音频时自动嵌入封面和元数据，存进手机音乐播放器直接能认
+- 支持嵌入字幕、内置 aria2c 多线程下载
+- Material Design 3 界面，支持动态取色和简体中文
+- 支持自定义 yt-dlp 命令模板——相当于把第四节的「配置文件」搬进手机，常用参数固化成模板随时调用
+
+安装：GitHub Releases 下载 APK（多数手机选 arm64-v8a）或 F-Droid 安装；要求 Android 7.0 及以上。
+
+一句话定位：本文「`-t mp3` + 嵌入封面 + 播放列表 + aria2c 提速」这些场景的手机版——不在电脑前时，手机就是下载器。
+
+### yt-dlp-downloader-skill：让 AI 助手学会 yt-dlp
+
+https://github.com/MapleShaw/yt-dlp-downloader-skill
+
+现在查资料、写代码的活越来越多人是跟 AI 助手聊着做的。这份 Agent Skill 把 yt-dlp 的用法打包成技能文件，装进助手后，「下载这个视频」一句话就能干活：
+
+```bash
+# 装进 Cursor 的技能目录（仓库文档里的默认路径）
+git clone https://github.com/MapleShaw/yt-dlp-downloader-skill.git ~/.cursor/skills/yt-dlp-downloader
+```
+
+之后用自然语言下指令：
+
+| 你说 | 效果 |
+| :--- | :--- |
+| 下载这个视频 <链接> | 最佳画质下载 |
+| 提取音频 <链接> | 下载并转 MP3 |
+| 下载视频和字幕 <链接> | 连字幕一起存 |
+| 下载 720p <链接> | 指定画质下载 |
+
+覆盖 1000+ 站点、MP3 提取、字幕下载、画质选择（720p / 1080p / 最佳）、YouTube 403 自动带浏览器 cookies、断点续传——对应第五节的日常下载和内容加工场景，区别只是参数由助手来记（MIT 协议）。
+
+顺带一提：SKILL.md 是通用的 Agent Skills 格式，Claude Code、Hermes、GitHub Copilot 等支持该格式的助手也能加载同一份技能文件，一次维护、多端复用；本地多助手共用的话，用软链接把技能目录链过去即可。
+
+### 什么时候用哪个
+
+| 你的情况 | 用什么 |
+| :--- | :--- |
+| 想在手机上直接下视频 / 音频 | Seal |
+| 桌面端不想碰命令行 | Stacher、Open Video Downloader（场景 31） |
+| 日常和 AI 助手一起干活 | yt-dlp-downloader-skill |
+| 批量、自动化、流水线 | 还是回到命令行：配置 + `--download-archive` + 定时任务 |
+
+---
+
+## 八、速查：常用命令与场景选型
 
 高频命令一览：
 
@@ -330,7 +386,7 @@ yt-dlp "https://www.douyin.com/video/7xxxxxxxxxxxxxxxxx"    # 视频页链接
 
 ---
 
-## 八、避坑清单 TOP 10
+## 九、避坑清单 TOP 10
 
 1. **报错第一件事：升级版本**。站点规则几乎每天在变，yt-dlp 更新极频繁，绝大多数解析失败升级即愈。
 2. **务必装 ffmpeg**。没有它会：合并失败、无法转码、嵌不了字幕——新手最高频的坑。
@@ -345,7 +401,7 @@ yt-dlp "https://www.douyin.com/video/7xxxxxxxxxxxxxxxxx"    # 视频页链接
 
 ---
 
-## 九、我的实际配置
+## 十、我的实际配置
 
 最后分享一下我在 Mac 上固化的配置。写进 `~/.config/yt-dlp/config`，以后直接 `yt-dlp URL` 即可：
 
@@ -370,7 +426,7 @@ yt-dlp "https://www.douyin.com/video/7xxxxxxxxxxxxxxxxx"    # 视频页链接
 
 ---
 
-## 十、小结
+## 十一、小结
 
 | 场景 | 一句话方案 |
 | :--- | :--- |
@@ -381,5 +437,7 @@ yt-dlp "https://www.douyin.com/video/7xxxxxxxxxxxxxxxxx"    # 视频页链接
 | 追更自动化 | `--download-archive` + cron |
 | 批量 / 归档 | `-a urls.txt` + `--write-info-json` |
 | 程序集成 | `yt_dlp.YoutubeDL` API |
+| 手机上下载 | Seal（安卓 GUI，见第七节） |
+| AI 助手直接下载 | yt-dlp-downloader-skill（见第七节） |
 
 yt-dlp 就像媒体下载界的「瑞士军刀」：表面是个下载器，实际是一整套媒体处理流水线。记住三条主线就不会迷路——**报错先更新、依赖装 ffmpeg、按场景选格式**。剩下三十多个场景，用到时回来抄命令即可。
