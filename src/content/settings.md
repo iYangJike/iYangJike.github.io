@@ -2,7 +2,7 @@
 avatarImage:
   src: ./profile.webp
   alt: My avatar
-githubCalendar: iYangJike
+# githubCalendar: iYangJike  # 已隐藏首页 GitHub 热力图（2026-10-22）；恢复时去掉行首 # 即可
 ---
 
 **二等饼 · 干：**
